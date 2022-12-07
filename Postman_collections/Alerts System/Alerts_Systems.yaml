@@ -1,0 +1,237 @@
+openapi: 3.0.0
+info:
+  version: '1.0.0'
+  title: 'Alerts System'
+  license:
+    name: MIT
+servers:
+  - url: 'https://alerts.api.dev.euler.tools'
+paths:
+  /alerts:
+    get:
+      summary: 'Get All Alerts'
+      operationId: getAlerts
+      description: 'Returns all available alerts'
+      tags:
+        - Alerts
+      responses:
+        '200':
+          description: 'Array containing list of alerts'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/All_alerts'
+    post:
+      summary: 'Create alert'
+      operationId: createAlert
+      description: 'Creates an alert'
+      tags:
+        - Alerts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                address:
+                  type: string
+                  example: "741sdd85xasw"
+                chain_id:
+                  type: string
+                  example: "bsc"
+                user_sub:
+                  type: string
+                  example: "14aswed2547rdswa"
+      responses:
+        '200':
+          description: 'Status message'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Create_alert'
+  /alerts/{address}:
+    get:
+      summary: 'Get Alerts By Chain_id And User_sub'
+      operationId: getAlert
+      description: 'Returns an alert by the given Chain id and User sub'
+      tags:
+        - Alerts
+      parameters:
+        - name: address
+          in: path
+          description: address
+          required: true
+          schema:
+            type: string
+            example: "741sdd85xasw"
+        - name: chain_id
+          in: query
+          description: Chain id
+          required: true
+          schema:
+            type: string
+            example: "bsc"
+        - name: user_sub
+          in: query
+          description: User sub
+          required: true
+          schema:
+            type: string
+            example: "14aswed2547rdswa"
+      responses:
+        '200':
+          description: 'Array containing list of alerts'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Alert_id'
+    put:
+      summary: 'Update the Alert by add new fields'
+      operationId: updateAlert
+      description: 'Updates an alert by the given Chain id and User sub'
+      tags:
+        - Alerts
+      parameters:
+        - name: address
+          in: path
+          description: address
+          required: true
+          schema:
+            type: string
+            example: "741sdd85xasw"
+        - name: chain_id
+          in: query
+          description: Chain id
+          required: true
+          schema:
+            type: string
+            example: "bsc"
+        - name: user_sub
+          in: query
+          description: User sub
+          required: true
+          schema:
+            type: string
+            example: "14aswed2547rdswa"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                chain_id:
+                  type: string
+                  example: "eth"
+                message:
+                  type: string
+                  example: "alerted"
+      responses:
+        '200':
+          description: 'Array containing list of alerts'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Update_id'
+    delete:
+      summary: 'Delete Alert Table'
+      operationId: deleteAlert
+      description: 'Deletes an alert by the given Chain id and User sub'
+      tags:
+        - Alerts
+      parameters:
+        - name: address
+          in: path
+          description: address
+          required: true
+          schema:
+            type: string
+            example: "741sdd85xasw"
+        - name: chain_id
+          in: query
+          description: Chain id
+          required: true
+          schema:
+            type: string
+            example: "bsc"
+        - name: user_sub
+          in: query
+          description: User sub
+          required: true
+          schema:
+            type: string
+            example: "14aswed2547rdswa"
+      responses:
+        '200':
+          description: 'Array containing list of alerts'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Deletes_alert'
+components:
+  schemas:
+    All_alerts:
+      type: array
+      items:
+        type: object
+        properties:
+          "isDelete": 
+                type: boolean
+                example: false
+          "created_at": 
+                type: string
+                example: "2022-06-22T09:57:25.460Z"
+          "deleted_at": 
+                type: string
+                example: "-"
+          "chain_id": 
+                type: string
+                example: "bsc"
+          "user_sub": 
+                type: string
+                example: "741852sssss"
+          "address": 
+                type: string
+                example: "741sdd85xaswsssss"
+    Create_alert:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Records Inserted Successfully"
+    Alert_id:
+      type: array
+      items:
+        type: object
+        properties:
+          "isDelete": 
+                type: boolean
+                example: false
+          "created_at": 
+                type: string
+                example: "2022-06-22T09:57:25.460Z"
+          "deleted_at": 
+                type: string
+                example: "-"
+          "chain_id": 
+                type: string
+                example: "bsc"
+          "user_sub": 
+                type: string
+                example: "741852sssss"
+          "address": 
+                type: string
+                example: "741sdd85xaswsssss"
+    Update_id:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Records Inserted Successfully"
+    Deletes_alert:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Records Deleted Successfully"
+        
+    
