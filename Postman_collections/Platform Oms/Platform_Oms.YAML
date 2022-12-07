@@ -1,0 +1,308 @@
+openapi: 3.0.0
+info:
+  version: '1.0.0'
+  title: 'App - Platform - oms'
+  license:
+    name: MIT
+servers:
+  - url: 'https://products.api.dev.euler.tools'
+paths:
+  /catalogs/products/{id}:
+    get:
+      summary: 'Get Product By Id'
+      operationId: getProductById
+      description: "Retuns products by the given Id"
+      tags:
+        - Products
+      parameters:
+        - name: id
+          in: path
+          description: Product Id
+          required: true
+          schema:
+            type: string
+            example: "14sjw25"
+      responses:
+        '200':
+          description: 'Array containing a list of products by the given Id'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Products_id'
+    put:
+      summary: 'Put New fields'
+      operationId: putNewFields
+      description: "Update a product by the given Id"
+      tags:
+        - Products
+      parameters:
+        - name: id
+          in: path
+          description: Product Id
+          required: true
+          schema:
+            type: string
+            example: "14sjw25"
+      responses:
+        '200':
+          description: 'Status message'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Update_product'
+    delete:
+      summary: 'Deletes product'
+      operationId: deleteProduct
+      description: "Delete a product by the given Id"
+      tags:
+        - Products
+      parameters:
+        - name: id
+          in: path
+          description: Product Id
+          required: true
+          schema:
+            type: string
+            example: "14sjw25"
+      responses:
+        '200':
+          description: 'Status message'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Delete_product'
+  /catalogs/products:
+    post:
+      summary: 'Post products'
+      operationId: creatProduct
+      description: "Creates a products"
+      tags:
+        - Products
+      responses:
+        '201':
+          description: 'Status message'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Create_product'
+    get:
+      summary: 'Get products'
+      operationId: getProducts
+      description: "Get all products"
+      tags:
+        - Products
+      responses:
+        '201':
+          description: 'Array containing list of products'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/All_products'
+  /catalogs/orders/{id}:
+    get:
+      summary: 'Get order by id'
+      operationId: getOrderById
+      description: "Retuns order by the given Id"
+      tags:
+        - Orders
+      parameters:
+        - name: id
+          in: path
+          description: Product Id
+          required: true
+          schema:
+            type: string
+            example: "14sjw25"
+      responses:
+        '200':
+          description: 'Array containing a list of orders by the given Id'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Orders_id'
+    put:
+      summary: 'Put New fields'
+      operationId: updateOrder
+      description: "Updates an order by the given Id"
+      tags:
+        - Orders
+      parameters:
+        - name: id
+          in: path
+          description: Product Id
+          required: true
+          schema:
+            type: string
+            example: "14sjw25"
+      responses:
+        '200':
+          description: 'Status message'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Updates_orders'
+    delete:
+      summary: 'Delete Orders'
+      operationId: deleteOrder
+      description: "Deletes an order by the given Id"
+      tags:
+        - Orders
+      parameters:
+        - name: id
+          in: path
+          description: Product Id
+          required: true
+          schema:
+            type: string
+            example: "14sjw25"
+      responses:
+        '200':
+          description: 'Status message'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Deletes_orders'
+  /catalogs/orders:
+    get:
+      summary: 'Get orders'
+      operationId: getOrders
+      description: "Get all Orders"
+      tags:
+        - Orders
+      responses:
+        '201':
+          description: 'Array containing list of orders'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/All_orders'
+    post:
+      summary: 'Creates orders'
+      operationId: createOrders
+      description: "Creates an order"
+      tags:
+        - Orders
+      responses:
+        '200':
+          description: 'Status message'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Create_order'
+components:
+  schemas:
+    Products_id:
+      type: object
+      properties:
+        Items:
+          type: array
+          items:
+            type: object
+            example:  [
+          {
+            "isDelete": false,
+            "user_sub": "products",
+            "created_at": "2022-06-23T01:28:34.696Z",
+            "deleted_at": "-",
+            "identifier": "14sjw25"
+          }
+          ]
+    "Count":
+        type: integer
+        format: int32
+        example: 1
+    "ScannedCount":
+        type: integer
+        format: int32
+        example: 1
+    Create_product:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Records Inserted Successfully..."
+    All_products:
+      type: object
+      properties:
+        Items:
+          type: array
+          items:
+            type: object
+            example: [
+        {
+            "isDelete": false,
+            "user_sub": "products",
+            "created_at": "2022-06-23T12:41:22.283Z",
+            "deleted_at": "-",
+            "identifier": "14sjw25"
+        }
+    ]
+    Update_product:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Products updated successfully..."
+    Delete_product:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Records Updated Successfully..."
+    Orders_id:
+      type: object
+      properties:
+        Items:
+          type: array
+          items:
+            type: object
+            example: [
+        {
+            "isDelete": true,
+            "created_at": "2022-06-22T19:43:01.673Z",
+            "deleted_at": "2022-06-22T19:43:29.183Z",
+            "identifier": "14sjw25",
+            "category": "products",
+            "user_sub": "orders"
+        }
+    ]
+    Updates_orders:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Orders updated successfully..."
+    Deletes_orders:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Records Updated Successfully..."
+    All_orders:
+      type: object
+      properties:
+        Items:
+          type: array
+          items:
+            type: object
+            example: [
+        {
+            "isDelete": true,
+            "created_at": "2022-06-22T19:43:01.673Z",
+            "deleted_at": "2022-06-22T19:43:29.183Z",
+            "identifier": "14sjw25",
+            "category": "products",
+            "user_sub": "orders"
+        }
+    ]
+    Create_order:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Records Inserted Successfully..."
+          
+          
+          
+        
+    
