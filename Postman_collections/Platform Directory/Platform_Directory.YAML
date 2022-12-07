@@ -1,0 +1,2253 @@
+openapi: 3.0.0
+info:
+  version: '1.0.0'
+  title: 'Platform - Directory'
+  license:
+    name: MIT
+servers:
+  - url: 'localhost:3000'
+paths:
+  /users/profiles:
+    get:
+      summary: 'Get All User Profiles'
+      operationId: getAllUsersProfiles
+      description: 'Returns all users profiles'
+      tags:
+        - Profiles
+      responses:
+        '200':
+          description: 'Array containing all profiles'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/profiles'
+  /users/profiles/{email}:
+    get:
+      summary: 'Get User Profile by User Email'
+      operationId: getUserProfileByEmail
+      description: 'Returns user profiles related to the given email'
+      tags:
+        - Profiles
+      parameters:
+        - name: email
+          in: path
+          description: Email of user
+          required: true
+          schema:
+            type: string
+            example: "tebayoso@gmail.com"
+      responses:
+        '200':
+          description: 'Array containing all profiles related to the given email'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user_email'
+    put:
+      summary: 'Update User Profile'
+      operationId: updateUserProfile
+      description: 'Updates user profiles related to the given email'
+      tags:
+        - Profiles
+      parameters:
+        - name: email
+          in: path
+          description: Email of user
+          required: true
+          schema:
+            type: string
+            example: "tebayoso@gmail.com"
+      responses:
+        '200':
+          description: 'Array containing all updated profile related to the given email'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Updates_user_email'
+    delete:
+      summary: 'Delete User Profile'
+      operationId: deleteUserProfile
+      description: 'Deletes user profiles related to the given email'
+      tags:
+        - Profiles
+      parameters:
+        - name: email
+          in: path
+          description: Email of user
+          required: true
+          schema:
+            type: string
+            example: "tebayoso@gmail.com"
+      responses:
+        '200':
+          description: 'Status message'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Deletes_user_email'
+  /users/subscriptions:
+    get:
+      summary: 'Get All Subscriptions'
+      operationId: getAllSubscriptions
+      description: 'Returns all subscriptions'
+      tags:
+        - Subscriptions
+      responses:
+        '200':
+          description: 'Array containing all subscriptions details '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/subscriptions'
+  /users/subscriptions/{subscription_id}:
+    get:
+      summary: 'Get Subscription by Id'
+      operationId: getSubscriptionById
+      description: 'Returns a subscription for the given id'
+      tags:
+        - Subscriptions
+      parameters:
+        - name: subscription_id
+          in: path
+          description: Subscription Id
+          required: true
+          schema:
+            type: string
+            example: "subscriptions~85bcaaed-70e6-4b07-b4cd-792c68842958"
+      responses:
+        '200':
+          description: 'Object containing subscription details'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/subscriptions_id'
+    delete:
+      summary: 'Deletes a subscription'
+      operationId: deleteSubscription
+      description: 'Delete a subscription for the given id'
+      tags:
+        - Subscriptions
+      parameters:
+        - name: subscription_id
+          in: path
+          description: Subscription Id
+          required: true
+          schema:
+            type: string
+            example: "subscriptions~85bcaaed-70e6-4b07-b4cd-792c68842958"
+      responses:
+        '200':
+          description: 'Status message'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Deletes_subscription'
+  /users/{user_sub}/notification/{notification_id}:
+    get:
+      summary: 'Get Notification by Id for user'
+      operationId: getNotificationById
+      description: 'Returns a notification for the given user ID'
+      tags:
+        - Notifications
+      parameters:
+        - name: user_sub
+          in: path
+          description: ID of the user
+          required: true
+          schema:
+            type: string
+            example: "53b8dfe2-89ea-4eb6-9c82-d740cfe5e192"
+        - name: notification_id
+          in: path
+          description: Notification ID
+          required: true
+          schema:
+            type: string
+            example: "olX2Hi0yVMG7xnsHndmfAfBqmCQWeGSC"
+      responses:
+        '200':
+          description: 'Object containing notification details'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/notifications'
+    put:
+      summary: 'Update isReaded and readed_at of notification'
+      operationId: updateSpecificNotification
+      description: 'Updates a specific notification'
+      tags:
+        - Notifications
+      parameters:
+        - name: user_sub
+          in: path
+          description: ID of the user
+          required: true
+          schema:
+            type: string
+            example: "5da797a7-9ec7-4f50-84fb-9686ca62fa88"
+        - name: notification_id
+          in: path
+          description: Notification ID
+          required: true
+          schema:
+            type: string
+            example: "a3TQHFCjPszqpl7zgD9Z7oKpQh17S35L"
+      responses:
+        '200':
+          description: 'Status message'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/updates_notification'
+  /users/{user_id}/notification:
+    put:
+      summary: 'Update isReaded and readed_at for all notification(mark_as_all_read)'
+      operationId: updateAllNotifications
+      description: 'Updates all notifications'
+      tags:
+        - Notifications
+      parameters:
+        - name: user_id
+          in: path
+          description: ID of the user
+          required: true
+          schema:
+            type: string
+            example: "53b8dfe2-89ea-4eb6-9c82-d740cfe5e192"
+      responses:
+        '200':
+          description: 'Status message'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/updates_all_notifications'
+    delete:
+      summary: 'Update isDeleted and deleted_at for all notification(mark_as_all_delete)'
+      operationId: deleteAllNotifications
+      description: 'Deletes all notifications'
+      tags:
+        - Notifications
+      parameters:
+        - name: user_id
+          in: path
+          description: ID of the user
+          required: true
+          schema:
+            type: string
+            example: "53b8dfe2-89ea-4eb6-9c82-d740cfe5e192"
+      responses:
+        '200':
+          description: 'Status message'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/deletes_all_notifications'
+components:
+  schemas:
+    profiles:
+      type: object
+      properties:
+        "Items":
+          type: array
+          items:
+            type: object
+          example: [
+        {
+            "isBlocked": false,
+            "updatedAt": "2022-04-28T17:30:48.299Z",
+            "status": "Verified",
+            "createdAt": "2022-04-28T17:30:48.299Z",
+            "user_sub": "44cd0b83-b3de-4292-9c12-be91b062493a",
+            "email": "Landwalker@mail.ru"
+        },
+        {
+            "isBlocked": false,
+            "updatedAt": "2022-05-16T22:21:20.892Z",
+            "status": "Verified",
+            "createdAt": "2022-05-11T12:24:27.949Z",
+            "user_sub": "83ea4250-29dd-489f-882e-4f9268bc07f1",
+            "email": "jarmella@euler.tools"
+        },
+        {
+            "isBlocked": false,
+            "updatedAt": "2022-04-23T06:42:10.679Z",
+            "status": "Verified",
+            "createdAt": "2022-04-23T06:42:10.679Z",
+            "user_sub": "046712ea-f3b3-40eb-b253-65e752cccfd2",
+            "email": "marckeys@gmail.com"
+        },
+        {
+            "isBlocked": false,
+            "updatedAt": "2022-05-13T15:37:57.652Z",
+            "status": "Verified",
+            "createdAt": "2022-05-03T13:43:13.966Z",
+            "user_sub": "85bcaaed-70e6-4b07-b4cd-792c68842958",
+            "email": "alejandro@euler.tools"
+        },
+        {
+            "isBlocked": true,
+            "updatedAt": "2022-05-02T22:03:20.977Z",
+            "status": "Not Verified",
+            "createdAt": "2022-05-02T22:00:08.985Z",
+            "user_sub": "87f84151-6e55-4290-a697-074b51189df9",
+            "email": "alejandro@euler.tools"
+        },
+        {
+            "isBlocked": true,
+            "updatedAt": "2022-05-02T22:06:27.748Z",
+            "status": "Not Verified",
+            "createdAt": "2022-05-02T22:05:25.667Z",
+            "user_sub": "c753aa01-aa4c-4751-a7c3-6305f92b1b33",
+            "email": "alejandro@euler.tools"
+        },
+        {
+            "isBlocked": false,
+            "updatedAt": "2022-04-21T05:59:16.922Z",
+            "status": "Verified",
+            "createdAt": "2022-04-21T05:59:16.922Z",
+            "user_sub": "bb467c23-2de9-4c23-86bd-78b8ec69b428",
+            "email": "arnaudrevellat@gmail.com"
+        },
+        {
+            "isBlocked": false,
+            "updatedAt": "2022-04-27T06:35:50.580Z",
+            "status": "Verified",
+            "createdAt": "2022-04-27T06:31:27.236Z",
+            "user_sub": "09e89352-04fd-4477-87c8-c7a905b35122",
+            "email": "rizaaktascoin@gmail.com"
+        },
+        {
+            "isBlocked": false,
+            "updatedAt": "2022-05-16T19:48:46.681Z",
+            "status": "Verified",
+            "createdAt": "2022-05-16T19:48:46.681Z",
+            "user_sub": "cd8ddc2f-d51a-4f48-8321-05458cf70154",
+            "email": "tebayoso@icloud.com"
+        },
+        {
+            "isBlocked": false,
+            "updatedAt": "2022-05-04T06:56:20.730Z",
+            "status": "Verified",
+            "createdAt": "2022-05-04T06:56:20.730Z",
+            "user_sub": "de168c5e-1edf-4485-9356-1337ff77fd99",
+            "email": "tebayoso@icloud.com"
+        },
+        {
+            "isBlocked": false,
+            "updatedAt": "2022-04-22T05:18:23.154Z",
+            "status": "Verified",
+            "createdAt": "2022-04-22T05:18:23.154Z",
+            "user_sub": "e0d12d7b-fc25-477f-9cab-9a7e44779076",
+            "email": "tebayoso@icloud.com"
+        },
+        {
+            "isBlocked": false,
+            "updatedAt": "2022-04-22T20:17:35.880Z",
+            "status": "Verified",
+            "createdAt": "2022-04-22T20:17:35.880Z",
+            "user_sub": "ee14f3fe-233b-42a9-a7a7-6e4272f4dba1",
+            "email": "homer30@web.de"
+        },
+        {
+            "isBlocked": false,
+            "updatedAt": "2022-04-21T13:14:57.254Z",
+            "status": "Verified",
+            "createdAt": "2022-04-21T13:14:57.254Z",
+            "user_sub": "3fe22b14-82ad-40ed-8958-66edefba54bb",
+            "email": "ardatuncalp@gmail.com"
+        },
+        {
+            "isBlocked": false,
+            "updatedAt": "2022-05-16T17:17:29.214Z",
+            "status": "Verified",
+            "createdAt": "2022-05-16T15:09:51.562Z",
+            "user_sub": "befd087b-ab88-40f9-b22d-3d9c839554f2",
+            "email": "juanpedroarmella@gmail.com"
+        },
+        {
+            "isBlocked": false,
+            "updatedAt": "2022-04-21T06:35:12.545Z",
+            "status": "Verified",
+            "createdAt": "2022-04-21T06:35:12.545Z",
+            "user_sub": "1ed5b6da-91b3-4ca6-bee7-a7c4aa1e8101",
+            "email": "bbuyuk07@gmail.com"
+        },
+        {
+            "isBlocked": false,
+            "updatedAt": "2022-05-03T20:16:28.882Z",
+            "status": "Verified",
+            "createdAt": "2022-04-20T17:03:53.855Z",
+            "user_sub": "68f67418-abdc-4c40-a5d3-b22e80ece8ff",
+            "email": "ericmenagatti@gmail.com"
+        },
+        {
+            "isBlocked": false,
+            "updatedAt": "2022-05-16T09:47:04.435Z",
+            "status": "Verified",
+            "createdAt": "2022-05-12T14:28:20.882Z",
+            "user_sub": "69623e98-e8df-49c1-9be6-e428d229df28",
+            "email": "jitendra.muradnar.fidel@gmail.com"
+        },
+        {
+            "isBlocked": false,
+            "updatedAt": "2022-04-25T05:55:30.005Z",
+            "status": "Verified",
+            "createdAt": "2022-04-25T05:55:30.005Z",
+            "user_sub": "6c4aefe3-142b-4e9e-9395-ec07c88086cb",
+            "email": "eresicibora@gmail.com"
+        },
+        {
+            "isBlocked": false,
+            "updatedAt": "2022-05-16T23:53:49.116Z",
+            "status": "Verified",
+            "createdAt": "2022-05-16T20:57:58.235Z",
+            "user_sub": "a12f63ba-831d-474c-a9c3-21f775011743",
+            "email": "mpialvarez90@gmail.com"
+        },
+        {
+            "isBlocked": false,
+            "updatedAt": "2022-05-03T09:36:18.759Z",
+            "status": "Verified",
+            "createdAt": "2022-04-20T18:14:06.101Z",
+            "user_sub": "2eab4329-42d9-4d67-adc8-becf8371f92d",
+            "email": "infoctneren@gmail.com"
+        },
+        {
+            "isBlocked": false,
+            "updatedAt": "2022-04-21T13:11:52.770Z",
+            "status": "Verified",
+            "createdAt": "2022-04-21T13:11:52.770Z",
+            "user_sub": "a617ab04-e9f7-4565-91c1-55bf41fbb556",
+            "email": "talat.turnali@gmail.com"
+        },
+        {
+            "isBlocked": false,
+            "updatedAt": "2022-05-13T15:58:45.049Z",
+            "status": "Verified",
+            "createdAt": "2022-05-06T12:17:37.376Z",
+            "user_sub": "c141759d-ab39-4ada-a84b-e706e302b0bf",
+            "email": "eric@euler.tools"
+        },
+        {
+            "isBlocked": false,
+            "updatedAt": "2022-04-21T01:45:47.731Z",
+            "status": "Verified",
+            "createdAt": "2022-04-21T01:45:47.731Z",
+            "user_sub": "5ed99bf1-7513-4be6-a1d4-0177dd624b3b",
+            "email": "ozgurmera9235@hotmail.com"
+        },
+        {
+            "isBlocked": false,
+            "updatedAt": "2022-04-23T20:52:42.668Z",
+            "status": "Verified",
+            "createdAt": "2022-04-23T20:52:42.668Z",
+            "user_sub": "19ca3736-c890-4494-a50c-8fe0128612e8",
+            "email": "leonhard@euler.tools"
+        },
+        {
+            "isBlocked": false,
+            "updatedAt": "2022-04-20T23:51:26.475Z",
+            "status": "Verified",
+            "createdAt": "2022-04-20T23:51:26.475Z",
+            "user_sub": "c658532e-5043-4839-be83-9d0a0fa26806",
+            "email": "fthgny27@gmail.com"
+        },
+        {
+            "isBlocked": false,
+            "updatedAt": "2022-05-04T14:56:59.563Z",
+            "status": "Verified",
+            "createdAt": "2022-05-04T14:56:59.563Z",
+            "user_sub": "a280714b-5db3-41ba-a3e7-9964d553a754",
+            "email": "leonard@euler.tools"
+        },
+        {
+            "isBlocked": false,
+            "updatedAt": "2022-04-21T07:23:53.144Z",
+            "status": "Verified",
+            "createdAt": "2022-04-21T07:23:53.144Z",
+            "user_sub": "d93aaeb7-fe07-42b4-9a0e-ea590769755c",
+            "email": "s.gunes.sevgi@hotmail.com"
+        },
+        {
+            "isBlocked": false,
+            "updatedAt": "2022-04-20T22:44:48.867Z",
+            "status": "Verified",
+            "createdAt": "2022-04-20T22:44:48.867Z",
+            "user_sub": "f515f106-1932-416b-aa2a-650199a803bd",
+            "email": "ihsannyigit@gmail.com"
+        },
+        {
+            "isBlocked": false,
+            "updatedAt": "2022-04-20T22:21:33.386Z",
+            "status": "Verified",
+            "createdAt": "2022-04-20T22:21:33.386Z",
+            "user_sub": "7e516a7c-d3aa-4f01-90e7-bd0c808009c0",
+            "email": "mert4976ali@hotmail.com"
+        },
+        {
+            "isBlocked": false,
+            "updatedAt": "2022-04-21T04:28:49.439Z",
+            "status": "Verified",
+            "createdAt": "2022-04-21T04:28:49.439Z",
+            "user_sub": "c1db2e16-22b6-4b8a-9f06-d5ae8a1d3093",
+            "email": "cansangull1@hotmail.com"
+        },
+        {
+            "isBlocked": false,
+            "updatedAt": "2022-05-03T11:11:28.136Z",
+            "status": "Verified",
+            "createdAt": "2022-05-03T11:11:28.136Z",
+            "user_sub": "612b7b01-841f-4331-a2c2-7876bb86fa2a",
+            "email": "muratalc73@gmail.com"
+        },
+        {
+            "isBlocked": false,
+            "updatedAt": "2022-04-21T17:30:39.942Z",
+            "status": "Verified",
+            "createdAt": "2022-04-21T17:30:39.942Z",
+            "user_sub": "51e6c394-e78b-42e3-ae46-37da5499f170",
+            "email": "tebayoso@gmail.com"
+        },
+        {
+            "isBlocked": false,
+            "updatedAt": "2022-05-05T18:24:53.450Z",
+            "status": "Verified",
+            "createdAt": "2022-05-05T18:24:53.450Z",
+            "user_sub": "5877185c-3935-4da6-9525-5c3e852b23c2",
+            "email": "tebayoso@gmail.com"
+        },
+        {
+            "isBlocked": false,
+            "updatedAt": "2022-04-27T11:39:18.839Z",
+            "status": "Verified",
+            "createdAt": "2022-04-21T11:38:11.901Z",
+            "user_sub": "fc54cfba-a976-42c2-a600-ff82d0855f73",
+            "email": "protolma@protonmail.com"
+        },
+        {
+            "isBlocked": false,
+            "updatedAt": "2022-05-13T13:06:41.178Z",
+            "status": "Verified",
+            "createdAt": "2022-05-09T08:32:19.036Z",
+            "user_sub": "7e9dca0f-ba40-4387-8e54-16297bb0d8f8",
+            "email": "isousa@euler.tools"
+        },
+        {
+            "isBlocked": false,
+            "updatedAt": "2022-05-17T01:13:13.254Z",
+            "status": "Verified",
+            "createdAt": "2022-04-20T19:07:21.571Z",
+            "user_sub": "4ee45088-5224-4272-8270-d6157fe52c0b",
+            "email": "jose@euler.tools"
+        },
+        {
+            "isBlocked": false,
+            "updatedAt": "2022-04-26T21:53:51.788Z",
+            "status": "Verified",
+            "createdAt": "2022-04-21T08:38:36.171Z",
+            "user_sub": "4c1590ac-c030-4f16-87cf-2a90edd4d635",
+            "email": "yusuf.sasmaz@hotmail.com"
+        },
+        {
+            "isBlocked": false,
+            "updatedAt": "2022-04-21T12:37:31.004Z",
+            "status": "Verified",
+            "createdAt": "2022-04-21T12:37:31.004Z",
+            "user_sub": "6490793d-8efc-40f1-bcc2-bba34e321823",
+            "email": "yahyabayindir80@gmail.com"
+        },
+        {
+            "isBlocked": false,
+            "updatedAt": "2022-04-21T07:31:27.698Z",
+            "status": "Verified",
+            "createdAt": "2022-04-21T07:31:27.698Z",
+            "user_sub": "2b1b2dd1-7f23-4004-9c27-30763c26234d",
+            "email": "mehmetdmr08@outlook.com"
+        },
+        {
+            "isBlocked": false,
+            "updatedAt": "2022-05-16T15:09:13.610Z",
+            "status": "Verified",
+            "createdAt": "2022-05-13T15:55:02.630Z",
+            "user_sub": "e65ff407-2e42-430a-a39f-55f08b870f7a",
+            "email": "jorge@euler.tools"
+        },
+        {
+            "isBlocked": false,
+            "updatedAt": "2022-04-21T14:35:45.740Z",
+            "status": "Verified",
+            "createdAt": "2022-04-21T01:06:06.277Z",
+            "user_sub": "7355caa1-feda-4ae5-939d-b279adfcfe33",
+            "email": "eylmz1942@gmail.com"
+        },
+        {
+            "isBlocked": false,
+            "updatedAt": "2022-04-20T21:37:47.723Z",
+            "status": "Verified",
+            "createdAt": "2022-04-20T21:37:47.723Z",
+            "user_sub": "3dea2503-ba83-4d7d-9f72-806243d2b02a",
+            "email": "kvladykin@gmail.com"
+        }
+        ] 
+        "Count":
+          type: integer
+          nullable: true
+          example: 42
+        "ScannedCount":
+          type: integer
+          nullable: true
+          example: 42
+    user_email:
+      type: object
+      properties:
+        "Items":
+          type: array
+          items:
+            type: object
+          example: [
+        {
+            "isBlocked": false,
+            "updatedAt": "2022-04-21T17:30:39.942Z",
+            "status": "Verified",
+            "createdAt": "2022-04-21T17:30:39.942Z",
+            "user_sub": "51e6c394-e78b-42e3-ae46-37da5499f170",
+            "email": "tebayoso@gmail.com"
+        },
+        {
+            "isBlocked": false,
+            "updatedAt": "2022-05-05T18:24:53.450Z",
+            "status": "Verified",
+            "createdAt": "2022-05-05T18:24:53.450Z",
+            "user_sub": "5877185c-3935-4da6-9525-5c3e852b23c2",
+            "email": "tebayoso@gmail.com"
+        }
+    ]
+    "Count":
+        type: integer
+        nullable: true
+        example: 2
+    "ScannedCount":
+        type: integer
+        nullable: true
+        example: 2
+    subscriptions:
+      type: object
+      properties:
+        "Items":
+          type: array
+          items:
+            type: object
+          example: [
+        {
+            "active": true,
+            "created_at": "2022-05-06T14:25:19.827Z",
+            "identifier": "subscription_setting~75c127b8-510f-4d83-a02c-7201d1e046ac",
+            "user_sub": "system",
+            "details": {
+                "portfolios": 1,
+                "staking": {
+                    "portfolios": 3,
+                    "portfolioEntities": 50
+                },
+                "alerts": false,
+                "wallets": 1,
+                "portfolioEntities": 20,
+                "notifications": {
+                    "wallet": false
+                }
+            },
+            "name": "free"
+        },
+        {
+            "active": true,
+            "created_at": "2022-05-21T07:31:25.989Z",
+            "expired_at": "2022-05-21T07:31:25.989Z",
+            "identifier": "subscriptions~2b1b2dd1-7f23-4004-9c27-30763c26234d",
+            "user_sub": "system",
+            "details": {
+                "portfolios": "1",
+                "staking": {
+                    "portfolios": "3",
+                    "portfolioEntities": "50"
+                },
+                "alerts": false,
+                "wallets": "3",
+                "portfolioEntities": "20",
+                "notifications": {
+                    "wallet": false
+                }
+            },
+            "name": "free"
+        },
+        {
+            "active": true,
+            "created_at": "2022-05-29T12:33:02.343Z",
+            "expired_at": "2022-05-29T12:33:02.343Z",
+            "identifier": "subscriptions~97b0d850-3c53-4683-a2e7-c0d0b539796d",
+            "user_sub": "system",
+            "details": {
+                "portfolios": "1",
+                "staking": {
+                    "portfolios": "3",
+                    "portfolioEntities": "50"
+                },
+                "alerts": false,
+                "wallets": "3",
+                "portfolioEntities": "20",
+                "notifications": {
+                    "wallet": false
+                }
+            },
+            "name": "free"
+        },
+        {
+            "created_at": "2022-05-06T15:20:45.729Z",
+            "identifier": "subscription~54dd8797-f987-42e2-9213-f2103f0514f1",
+            "subscription": "free",
+            "status": "confirmed",
+            "user_sub": "85bcaaed-70e6-4b07-b4cd-792c68842958",
+            "details": {}
+        },
+        {
+            "active": true,
+            "created_at": "2022-06-16T11:05:35.611Z",
+            "expired_at": "2022-06-16T11:05:35.611Z",
+            "identifier": "subscriptions~4ae39bb6-a7a7-44b9-a53e-2ed0b5f0f961",
+            "user_sub": "system",
+            "details": {
+                "portfolios": "1",
+                "staking": {
+                    "portfolios": "3",
+                    "portfolioEntities": "50"
+                },
+                "alerts": false,
+                "wallets": "3",
+                "portfolioEntities": "20",
+                "notifications": {
+                    "wallet": false
+                }
+            },
+            "name": "free"
+        },
+        {
+            "active": true,
+            "created_at": "2022-06-01T07:56:15.614Z",
+            "expired_at": "2022-06-01T07:56:15.614Z",
+            "identifier": "subscriptions~3ba29970-95a1-4752-aab7-2447ff08e02d",
+            "user_sub": "system",
+            "details": {
+                "portfolios": "1",
+                "staking": {
+                    "portfolios": "3",
+                    "portfolioEntities": "50"
+                },
+                "alerts": false,
+                "wallets": "3",
+                "portfolioEntities": "20",
+                "notifications": {
+                    "wallet": false
+                }
+            },
+            "name": "free"
+        },
+        {
+            "created_at": "2022-05-13T13:06:43.147Z",
+            "identifier": "subscription~e513fa4a-fbcf-418f-a04d-c7b7eb8c2b50",
+            "subscription": "free",
+            "status": "confirmed",
+            "user_sub": "7e9dca0f-ba40-4387-8e54-16297bb0d8f8",
+            "details": {}
+        },
+        {
+            "active": true,
+            "created_at": "2022-06-04T05:34:03.139Z",
+            "expired_at": "2022-06-04T05:34:03.139Z",
+            "identifier": "subscriptions~23661682-5c4e-4cff-b928-f330aeb060ed",
+            "user_sub": "system",
+            "details": {
+                "portfolios": "1",
+                "staking": {
+                    "portfolios": "3",
+                    "portfolioEntities": "50"
+                },
+                "alerts": false,
+                "wallets": "3",
+                "portfolioEntities": "20",
+                "notifications": {
+                    "wallet": false
+                }
+            },
+            "name": "free"
+        },
+        {
+            "active": true,
+            "created_at": "2022-06-04T05:45:18.418Z",
+            "expired_at": "2022-06-04T05:45:18.418Z",
+            "identifier": "subscriptions~d4df19d6-4490-466e-960a-9d19b2d7a30a",
+            "user_sub": "system",
+            "details": {
+                "portfolios": "1",
+                "staking": {
+                    "portfolios": "3",
+                    "portfolioEntities": "50"
+                },
+                "alerts": false,
+                "wallets": "3",
+                "portfolioEntities": "20",
+                "notifications": {
+                    "wallet": false
+                }
+            },
+            "name": "free"
+        },
+        {
+            "active": true,
+            "created_at": "2022-06-04T05:18:17.853Z",
+            "expired_at": "2022-06-04T05:18:17.853Z",
+            "identifier": "subscriptions~c5494665-5a38-46e1-827f-21584c460246",
+            "user_sub": "system",
+            "details": {
+                "portfolios": "1",
+                "staking": {
+                    "portfolios": "3",
+                    "portfolioEntities": "50"
+                },
+                "alerts": false,
+                "wallets": "3",
+                "portfolioEntities": "20",
+                "notifications": {
+                    "wallet": false
+                }
+            },
+            "name": "free"
+        },
+        {
+            "active": true,
+            "created_at": "2022-06-10T09:32:16.079Z",
+            "expired_at": "2022-06-10T09:32:16.079Z",
+            "identifier": "subscriptions~de24395b-c5d8-4e4a-9e92-b54e8a969b23",
+            "user_sub": "system",
+            "details": {
+                "portfolios": "1",
+                "staking": {
+                    "portfolios": "3",
+                    "portfolioEntities": "50"
+                },
+                "alerts": false,
+                "wallets": "3",
+                "portfolioEntities": "20",
+                "notifications": {
+                    "wallet": false
+                }
+            },
+            "name": "free"
+        },
+        {
+            "active": true,
+            "created_at": "2022-06-10T12:24:28.749Z",
+            "expired_at": "2022-06-10T12:24:28.749Z",
+            "identifier": "subscriptions~83ea4250-29dd-489f-882e-4f9268bc07f1",
+            "user_sub": "system",
+            "details": {
+                "portfolios": "1",
+                "staking": {
+                    "portfolios": "3",
+                    "portfolioEntities": "50"
+                },
+                "alerts": false,
+                "wallets": "3",
+                "portfolioEntities": "20",
+                "notifications": {
+                    "wallet": false
+                }
+            },
+            "name": "free",
+            "lastLogin": "2022-05-17T14:47:26.749Z"
+        },
+        {
+            "active": true,
+            "created_at": "2022-06-05T12:17:39.351Z",
+            "expired_at": "2022-06-05T12:17:39.351Z",
+            "identifier": "subscriptions~c141759d-ab39-4ada-a84b-e706e302b0bf",
+            "user_sub": "system",
+            "details": {
+                "portfolios": "1",
+                "staking": {
+                    "portfolios": "3",
+                    "portfolioEntities": "50"
+                },
+                "alerts": false,
+                "wallets": "3",
+                "portfolioEntities": "20",
+                "notifications": {
+                    "wallet": false
+                }
+            },
+            "name": "free",
+            "lastLogin": "2022-05-13T15:58:46.228Z"
+        },
+        {
+            "active": true,
+            "created_at": "2022-05-22T06:39:55.991Z",
+            "expired_at": "2022-05-22T06:39:55.991Z",
+            "identifier": "subscriptions~e8498c47-c71a-42b1-b190-49cfdeba76f3",
+            "user_sub": "system",
+            "details": {
+                "portfolios": "1",
+                "staking": {
+                    "portfolios": "3",
+                    "portfolioEntities": "50"
+                },
+                "alerts": false,
+                "wallets": "3",
+                "portfolioEntities": "20",
+                "notifications": {
+                    "wallet": false
+                }
+            },
+            "name": "free"
+        },
+        {
+            "active": true,
+            "created_at": "2022-05-29T10:49:11.078Z",
+            "expired_at": "2022-05-29T10:49:11.078Z",
+            "identifier": "subscriptions~bf333b32-c02a-43c5-8ba4-8801cc26b691",
+            "user_sub": "system",
+            "details": {
+                "portfolios": "1",
+                "staking": {
+                    "portfolios": "3",
+                    "portfolioEntities": "50"
+                },
+                "alerts": false,
+                "wallets": "3",
+                "portfolioEntities": "20",
+                "notifications": {
+                    "wallet": false
+                }
+            },
+            "name": "free"
+        },
+        {
+            "active": true,
+            "created_at": "2022-06-01T22:00:12.284Z",
+            "expired_at": "2022-06-01T22:00:12.284Z",
+            "identifier": "subscriptions~87f84151-6e55-4290-a697-074b51189df9",
+            "user_sub": "system",
+            "details": {
+                "portfolios": "1",
+                "staking": {
+                    "portfolios": "3",
+                    "portfolioEntities": "50"
+                },
+                "alerts": false,
+                "wallets": "3",
+                "portfolioEntities": "20",
+                "notifications": {
+                    "wallet": false
+                }
+            },
+            "name": "free"
+        },
+        {
+            "active": true,
+            "created_at": "2022-06-10T14:01:36.498Z",
+            "expired_at": "2022-06-10T14:01:36.498Z",
+            "identifier": "subscriptions~f623fa62-443a-4faf-8758-e3d9e2d2a167",
+            "user_sub": "system",
+            "details": {
+                "portfolios": "1",
+                "staking": {
+                    "portfolios": "3",
+                    "portfolioEntities": "50"
+                },
+                "alerts": false,
+                "wallets": "3",
+                "portfolioEntities": "20",
+                "notifications": {
+                    "wallet": false
+                }
+            },
+            "name": "free"
+        },
+        {
+            "active": true,
+            "created_at": "2022-06-03T14:29:56.406Z",
+            "expired_at": "2022-06-03T14:29:56.406Z",
+            "identifier": "subscriptions~ea65e3ac-ca2a-456e-8956-ca591db76472",
+            "user_sub": "system",
+            "details": {
+                "portfolios": "1",
+                "staking": {
+                    "portfolios": "3",
+                    "portfolioEntities": "50"
+                },
+                "alerts": false,
+                "wallets": "3",
+                "portfolioEntities": "20",
+                "notifications": {
+                    "wallet": false
+                }
+            },
+            "name": "free"
+        },
+        {
+            "active": true,
+            "created_at": "2022-05-21T11:21:16.852Z",
+            "expired_at": "2022-05-21T11:21:16.852Z",
+            "identifier": "subscriptions~4ee45088-5224-4272-8270-d6157fe52c0b",
+            "user_sub": "system",
+            "details": {
+                "portfolios": "1",
+                "staking": {
+                    "portfolios": "3",
+                    "portfolioEntities": "50"
+                },
+                "alerts": false,
+                "wallets": "3",
+                "portfolioEntities": "20",
+                "notifications": {
+                    "wallet": false
+                }
+            },
+            "name": "free",
+            "lastLogin": "2022-05-17T14:47:29.545Z"
+        },
+        {
+            "active": true,
+            "created_at": "2022-06-15T15:09:53.527Z",
+            "expired_at": "2022-06-15T15:09:53.527Z",
+            "identifier": "subscriptions~befd087b-ab88-40f9-b22d-3d9c839554f2",
+            "user_sub": "system",
+            "details": {
+                "portfolios": "1",
+                "staking": {
+                    "portfolios": "3",
+                    "portfolioEntities": "50"
+                },
+                "alerts": false,
+                "wallets": "3",
+                "portfolioEntities": "20",
+                "notifications": {
+                    "wallet": false
+                }
+            },
+            "name": "free",
+            "lastLogin": "2022-05-16T17:17:29.487Z"
+        },
+        {
+            "active": true,
+            "created_at": "2022-06-10T11:32:00.682Z",
+            "expired_at": "2022-06-10T11:32:00.682Z",
+            "identifier": "subscriptions~4a7c313b-056f-47f8-b21e-7b9fc1bf7b2f",
+            "user_sub": "system",
+            "details": {
+                "portfolios": "1",
+                "staking": {
+                    "portfolios": "3",
+                    "portfolioEntities": "50"
+                },
+                "alerts": false,
+                "wallets": "3",
+                "portfolioEntities": "20",
+                "notifications": {
+                    "wallet": false
+                }
+            },
+            "name": "free"
+        },
+        {
+            "created_at": "2022-05-06T15:39:46.852Z",
+            "identifier": "subscription~fc27f237-7b1e-45f0-9b05-bdf0eb18cc42",
+            "subscription": "free",
+            "status": "confirmed",
+            "user_sub": "c141759d-ab39-4ada-a84b-e706e302b0bf",
+            "details": {}
+        },
+        {
+            "active": true,
+            "created_at": "2022-05-29T13:23:26.985Z",
+            "expired_at": "2022-05-29T13:23:26.985Z",
+            "identifier": "subscriptions~a7d29b6a-8fcc-4f9d-9515-92965644c839",
+            "user_sub": "system",
+            "details": {
+                "portfolios": "1",
+                "staking": {
+                    "portfolios": "3",
+                    "portfolioEntities": "50"
+                },
+                "alerts": false,
+                "wallets": "3",
+                "portfolioEntities": "20",
+                "notifications": {
+                    "wallet": false
+                }
+            },
+            "name": "free"
+        },
+        {
+            "active": true,
+            "created_at": "2022-06-11T14:28:22.709Z",
+            "expired_at": "2022-06-11T14:28:22.709Z",
+            "identifier": "subscriptions~69623e98-e8df-49c1-9be6-e428d229df28",
+            "user_sub": "system",
+            "details": {
+                "portfolios": "1",
+                "staking": {
+                    "portfolios": "3",
+                    "portfolioEntities": "50"
+                },
+                "alerts": false,
+                "wallets": "3",
+                "portfolioEntities": "20",
+                "notifications": {
+                    "wallet": false
+                }
+            },
+            "name": "free",
+            "lastLogin": "2022-05-16T09:47:05.237Z"
+        },
+        {
+            "active": true,
+            "created_at": "2022-06-10T12:56:09.221Z",
+            "expired_at": "2022-06-10T12:56:09.221Z",
+            "identifier": "subscriptions~ca7065c6-4dda-4afe-b213-f793b4efe72d",
+            "user_sub": "system",
+            "details": {
+                "portfolios": "1",
+                "staking": {
+                    "portfolios": "3",
+                    "portfolioEntities": "50"
+                },
+                "alerts": false,
+                "wallets": "3",
+                "portfolioEntities": "20",
+                "notifications": {
+                    "wallet": false
+                }
+            },
+            "name": "free",
+            "lastLogin": "2022-05-11T12:56:17.412Z"
+        },
+        {
+            "active": true,
+            "created_at": "2022-05-21T12:37:29.667Z",
+            "expired_at": "2022-05-21T12:37:29.667Z",
+            "identifier": "subscriptions~6490793d-8efc-40f1-bcc2-bba34e321823",
+            "user_sub": "system",
+            "details": {
+                "portfolios": "1",
+                "staking": {
+                    "portfolios": "3",
+                    "portfolioEntities": "50"
+                },
+                "alerts": false,
+                "wallets": "3",
+                "portfolioEntities": "20",
+                "notifications": {
+                    "wallet": false
+                }
+            },
+            "name": "free"
+        },
+        {
+            "active": true,
+            "created_at": "2022-05-21T13:11:52.376Z",
+            "expired_at": "2022-05-21T13:11:52.376Z",
+            "identifier": "subscriptions~a617ab04-e9f7-4565-91c1-55bf41fbb556",
+            "user_sub": "system",
+            "details": {
+                "portfolios": "1",
+                "staking": {
+                    "portfolios": "3",
+                    "portfolioEntities": "50"
+                },
+                "alerts": false,
+                "wallets": "3",
+                "portfolioEntities": "20",
+                "notifications": {
+                    "wallet": false
+                }
+            },
+            "name": "free"
+        },
+        {
+            "active": true,
+            "created_at": "2022-05-27T06:26:28.311Z",
+            "expired_at": "2022-05-27T06:26:28.311Z",
+            "identifier": "subscriptions~f87c1581-45d0-47c2-a3ba-0a3465717841",
+            "user_sub": "system",
+            "details": {
+                "portfolios": "1",
+                "staking": {
+                    "portfolios": "3",
+                    "portfolioEntities": "50"
+                },
+                "alerts": false,
+                "wallets": "3",
+                "portfolioEntities": "20",
+                "notifications": {
+                    "wallet": false
+                }
+            },
+            "name": "free"
+        },
+        {
+            "active": true,
+            "created_at": "2022-06-02T11:11:29.956Z",
+            "expired_at": "2022-06-02T11:11:29.956Z",
+            "identifier": "subscriptions~612b7b01-841f-4331-a2c2-7876bb86fa2a",
+            "user_sub": "system",
+            "details": {
+                "portfolios": "1",
+                "staking": {
+                    "portfolios": "3",
+                    "portfolioEntities": "50"
+                },
+                "alerts": false,
+                "wallets": "3",
+                "portfolioEntities": "20",
+                "notifications": {
+                    "wallet": false
+                }
+            },
+            "name": "free"
+        },
+        {
+            "active": true,
+            "created_at": "2022-06-01T07:46:09.068Z",
+            "expired_at": "2022-06-01T07:46:09.068Z",
+            "identifier": "subscriptions~b0faffae-abaf-476a-bcf1-574a5c2f4166",
+            "user_sub": "system",
+            "details": {
+                "portfolios": "1",
+                "staking": {
+                    "portfolios": "3",
+                    "portfolioEntities": "50"
+                },
+                "alerts": false,
+                "wallets": "3",
+                "portfolioEntities": "20",
+                "notifications": {
+                    "wallet": false
+                }
+            },
+            "name": "free"
+        },
+        {
+            "created_at": "2022-05-12T08:48:06.286Z",
+            "identifier": "subscription~7b817a29-b844-4845-a94d-ed330392137a",
+            "subscription": "free",
+            "status": "confirmed",
+            "user_sub": "e65ff407-2e42-430a-a39f-55f08b870f7a",
+            "details": {}
+        },
+        {
+            "active": true,
+            "created_at": "2022-05-21T14:26:40.987Z",
+            "expired_at": "2022-05-21T14:26:40.987Z",
+            "identifier": "subscriptions~103af98f-0a7a-48a4-b8b6-17427c6ad44a",
+            "user_sub": "system",
+            "details": {
+                "portfolios": "1",
+                "staking": {
+                    "portfolios": "3",
+                    "portfolioEntities": "50"
+                },
+                "alerts": false,
+                "wallets": "3",
+                "portfolioEntities": "20",
+                "notifications": {
+                    "wallet": false
+                }
+            },
+            "name": "free"
+        },
+        {
+            "active": true,
+            "created_at": "2022-06-03T14:39:46.547Z",
+            "expired_at": "2022-06-03T14:39:46.547Z",
+            "identifier": "subscriptions~b0bea6b3-22db-487d-90c8-23305cfc98bb",
+            "user_sub": "system",
+            "details": {
+                "portfolios": "1",
+                "staking": {
+                    "portfolios": "3",
+                    "portfolioEntities": "50"
+                },
+                "alerts": false,
+                "wallets": "3",
+                "portfolioEntities": "20",
+                "notifications": {
+                    "wallet": false
+                }
+            },
+            "name": "free"
+        },
+        {
+            "active": true,
+            "created_at": "2022-05-29T10:54:20.852Z",
+            "expired_at": "2022-05-29T10:54:20.852Z",
+            "identifier": "subscriptions~aa199bb5-a5eb-41f4-9035-d2ca6444bf78",
+            "user_sub": "system",
+            "details": {
+                "portfolios": "1",
+                "staking": {
+                    "portfolios": "3",
+                    "portfolioEntities": "50"
+                },
+                "alerts": false,
+                "wallets": "3",
+                "portfolioEntities": "20",
+                "notifications": {
+                    "wallet": false
+                }
+            },
+            "name": "free"
+        },
+        {
+            "active": true,
+            "created_at": "2022-06-03T06:56:22.503Z",
+            "expired_at": "2022-06-03T06:56:22.503Z",
+            "identifier": "subscriptions~de168c5e-1edf-4485-9356-1337ff77fd99",
+            "user_sub": "system",
+            "details": {
+                "portfolios": "1",
+                "staking": {
+                    "portfolios": "3",
+                    "portfolioEntities": "50"
+                },
+                "alerts": false,
+                "wallets": "3",
+                "portfolioEntities": "20",
+                "notifications": {
+                    "wallet": false
+                }
+            },
+            "name": "free"
+        },
+        {
+            "active": true,
+            "created_at": "2022-06-01T08:02:05.984Z",
+            "expired_at": "2022-06-01T08:02:05.984Z",
+            "identifier": "subscriptions~09e23719-99f7-422f-87c1-d1dca9e3ab4c",
+            "user_sub": "system",
+            "details": {
+                "portfolios": "1",
+                "staking": {
+                    "portfolios": "3",
+                    "portfolioEntities": "50"
+                },
+                "alerts": false,
+                "wallets": "3",
+                "portfolioEntities": "20",
+                "notifications": {
+                    "wallet": false
+                }
+            },
+            "name": "free"
+        },
+        {
+            "active": true,
+            "created_at": "2022-05-21T08:38:34.876Z",
+            "expired_at": "2022-05-21T08:38:34.876Z",
+            "identifier": "subscriptions~4c1590ac-c030-4f16-87cf-2a90edd4d635",
+            "user_sub": "system",
+            "details": {
+                "portfolios": "1",
+                "staking": {
+                    "portfolios": "3",
+                    "portfolioEntities": "50"
+                },
+                "alerts": false,
+                "wallets": "3",
+                "portfolioEntities": "20",
+                "notifications": {
+                    "wallet": false
+                }
+            },
+            "name": "free",
+            "lastLogin": "2022-04-26T21:53:52.833Z"
+        },
+        {
+            "active": true,
+            "created_at": "2022-06-01T22:05:26.833Z",
+            "expired_at": "2022-06-01T22:05:26.833Z",
+            "identifier": "subscriptions~c753aa01-aa4c-4751-a7c3-6305f92b1b33",
+            "user_sub": "system",
+            "details": {
+                "portfolios": "1",
+                "staking": {
+                    "portfolios": "3",
+                    "portfolioEntities": "50"
+                },
+                "alerts": false,
+                "wallets": "3",
+                "portfolioEntities": "20",
+                "notifications": {
+                    "wallet": false
+                }
+            },
+            "name": "free"
+        },
+        {
+            "active": true,
+            "created_at": "2022-06-08T08:32:20.826Z",
+            "expired_at": "2022-06-08T08:32:20.826Z",
+            "identifier": "subscriptions~7e9dca0f-ba40-4387-8e54-16297bb0d8f8",
+            "user_sub": "system",
+            "details": {
+                "portfolios": "1",
+                "staking": {
+                    "portfolios": "3",
+                    "portfolioEntities": "50"
+                },
+                "alerts": false,
+                "wallets": "3",
+                "portfolioEntities": "20",
+                "notifications": {
+                    "wallet": false
+                }
+            },
+            "name": "free",
+            "lastLogin": "2022-05-13T13:06:42.324Z"
+        },
+        {
+            "active": true,
+            "created_at": "2022-06-03T13:31:47.711Z",
+            "expired_at": "2022-06-03T13:31:47.711Z",
+            "identifier": "subscriptions~71f62270-969c-499b-b96f-fc47e9912874",
+            "user_sub": "system",
+            "details": {
+                "portfolios": "1",
+                "staking": {
+                    "portfolios": "3",
+                    "portfolioEntities": "50"
+                },
+                "alerts": false,
+                "wallets": "3",
+                "portfolioEntities": "20",
+                "notifications": {
+                    "wallet": false
+                }
+            },
+            "name": "free"
+        },
+        {
+            "active": true,
+            "created_at": "2022-05-23T20:52:41.096Z",
+            "expired_at": "2022-05-23T20:52:41.096Z",
+            "identifier": "subscriptions~19ca3736-c890-4494-a50c-8fe0128612e8",
+            "user_sub": "system",
+            "details": {
+                "portfolios": "1",
+                "staking": {
+                    "portfolios": "3",
+                    "portfolioEntities": "50"
+                },
+                "alerts": false,
+                "wallets": "3",
+                "portfolioEntities": "20",
+                "notifications": {
+                    "wallet": false
+                }
+            },
+            "name": "free"
+        },
+        {
+            "active": true,
+            "created_at": "2022-05-21T06:57:00.847Z",
+            "expired_at": "2022-05-21T06:57:00.847Z",
+            "identifier": "subscriptions~d62e74bb-93d3-4172-994f-175736ddb99c",
+            "user_sub": "system",
+            "details": {
+                "portfolios": "1",
+                "staking": {
+                    "portfolios": "3",
+                    "portfolioEntities": "50"
+                },
+                "alerts": false,
+                "wallets": "3",
+                "portfolioEntities": "20",
+                "notifications": {
+                    "wallet": false
+                }
+            },
+            "name": "free"
+        },
+        {
+            "active": true,
+            "created_at": "2022-05-25T05:55:28.976Z",
+            "expired_at": "2022-05-25T05:55:28.976Z",
+            "identifier": "subscriptions~6c4aefe3-142b-4e9e-9395-ec07c88086cb",
+            "user_sub": "system",
+            "details": {
+                "portfolios": "1",
+                "staking": {
+                    "portfolios": "3",
+                    "portfolioEntities": "50"
+                },
+                "alerts": false,
+                "wallets": "3",
+                "portfolioEntities": "20",
+                "notifications": {
+                    "wallet": false
+                }
+            },
+            "name": "free"
+        },
+        {
+            "active": true,
+            "created_at": "2022-06-03T14:35:05.805Z",
+            "expired_at": "2022-06-03T14:35:05.805Z",
+            "identifier": "subscriptions~bd836524-f154-4ee0-a625-4aade94ac559",
+            "user_sub": "system",
+            "details": {
+                "portfolios": "1",
+                "staking": {
+                    "portfolios": "3",
+                    "portfolioEntities": "50"
+                },
+                "alerts": false,
+                "wallets": "3",
+                "portfolioEntities": "20",
+                "notifications": {
+                    "wallet": false
+                }
+            },
+            "name": "free"
+        },
+        {
+            "active": true,
+            "created_at": "2022-05-22T05:18:21.335Z",
+            "expired_at": "2022-05-22T05:18:21.335Z",
+            "identifier": "subscriptions~e0d12d7b-fc25-477f-9cab-9a7e44779076",
+            "user_sub": "system",
+            "details": {
+                "portfolios": "1",
+                "staking": {
+                    "portfolios": "3",
+                    "portfolioEntities": "50"
+                },
+                "alerts": false,
+                "wallets": "3",
+                "portfolioEntities": "20",
+                "notifications": {
+                    "wallet": false
+                }
+            },
+            "name": "free"
+        },
+        {
+            "active": true,
+            "created_at": "2022-06-15T20:58:00.074Z",
+            "expired_at": "2022-06-15T20:58:00.074Z",
+            "identifier": "subscriptions~a12f63ba-831d-474c-a9c3-21f775011743",
+            "user_sub": "system",
+            "details": {
+                "portfolios": "1",
+                "staking": {
+                    "portfolios": "3",
+                    "portfolioEntities": "50"
+                },
+                "alerts": false,
+                "wallets": "3",
+                "portfolioEntities": "20",
+                "notifications": {
+                    "wallet": false
+                }
+            },
+            "name": "free",
+            "lastLogin": "2022-05-16T23:53:49.397Z"
+        },
+        {
+            "active": true,
+            "created_at": "2022-06-12T15:55:04.545Z",
+            "expired_at": "2022-06-12T15:55:04.545Z",
+            "identifier": "subscriptions~e65ff407-2e42-430a-a39f-55f08b870f7a",
+            "user_sub": "system",
+            "details": {
+                "portfolios": "1",
+                "staking": {
+                    "portfolios": "3",
+                    "portfolioEntities": "50"
+                },
+                "alerts": false,
+                "wallets": "3",
+                "portfolioEntities": "20",
+                "notifications": {
+                    "wallet": false
+                }
+            },
+            "name": "free"
+        },
+        {
+            "active": true,
+            "created_at": "2022-05-29T12:44:03.289Z",
+            "expired_at": "2022-05-29T12:44:03.289Z",
+            "identifier": "subscriptions~d54729fe-fb46-45be-9be2-14b0a6dc3724",
+            "user_sub": "system",
+            "details": {
+                "portfolios": "1",
+                "staking": {
+                    "portfolios": "3",
+                    "portfolioEntities": "50"
+                },
+                "alerts": false,
+                "wallets": "3",
+                "portfolioEntities": "20",
+                "notifications": {
+                    "wallet": false
+                }
+            },
+            "name": "free"
+        },
+        {
+            "active": true,
+            "created_at": "2022-05-28T17:30:46.082Z",
+            "expired_at": "2022-05-28T17:30:46.082Z",
+            "identifier": "subscriptions~44cd0b83-b3de-4292-9c12-be91b062493a",
+            "user_sub": "system",
+            "details": {
+                "portfolios": "1",
+                "staking": {
+                    "portfolios": "3",
+                    "portfolioEntities": "50"
+                },
+                "alerts": false,
+                "wallets": "3",
+                "portfolioEntities": "20",
+                "notifications": {
+                    "wallet": false
+                }
+            },
+            "name": "free"
+        },
+        {
+            "active": true,
+            "created_at": "2022-05-06T14:25:19.827Z",
+            "identifier": "subscription_setting~9bac25b6-d172-43c0-8f3b-8f91331e91d0",
+            "user_sub": "system",
+            "details": {
+                "portfolios": 10000000000,
+                "staking": {
+                    "portfolios": 10000000000,
+                    "portfolioEntities": 10000000000
+                },
+                "alerts": false,
+                "wallets": 10000000000,
+                "portfolioEntities": 10000000000,
+                "notifications": {
+                    "wallet": false
+                }
+            },
+            "price": {
+                "discount_threshold_eulers": 4000,
+                "usd_month": 149.99,
+                "usd_month_discounted": 99.99
+            },
+            "name": "advanced"
+        },
+        {
+            "active": true,
+            "created_at": "2022-06-15T19:48:48.522Z",
+            "expired_at": "2022-06-15T19:48:48.522Z",
+            "identifier": "subscriptions~cd8ddc2f-d51a-4f48-8321-05458cf70154",
+            "user_sub": "system",
+            "details": {
+                "portfolios": "1",
+                "staking": {
+                    "portfolios": "3",
+                    "portfolioEntities": "50"
+                },
+                "alerts": false,
+                "wallets": "3",
+                "portfolioEntities": "20",
+                "notifications": {
+                    "wallet": false
+                }
+            },
+            "name": "free"
+        },
+        {
+            "active": true,
+            "created_at": "2022-06-10T07:08:21.596Z",
+            "expired_at": "2022-06-10T07:08:21.596Z",
+            "identifier": "subscriptions~7d10431c-4daf-43bc-b3d5-e4552f3cef90",
+            "user_sub": "system",
+            "details": {
+                "portfolios": "1",
+                "staking": {
+                    "portfolios": "3",
+                    "portfolioEntities": "50"
+                },
+                "alerts": false,
+                "wallets": "3",
+                "portfolioEntities": "20",
+                "notifications": {
+                    "wallet": false
+                }
+            },
+            "name": "free"
+        },
+        {
+            "active": true,
+            "created_at": "2022-05-22T20:17:34.730Z",
+            "expired_at": "2022-05-22T20:17:34.730Z",
+            "identifier": "subscriptions~ee14f3fe-233b-42a9-a7a7-6e4272f4dba1",
+            "user_sub": "system",
+            "details": {
+                "portfolios": "1",
+                "staking": {
+                    "portfolios": "3",
+                    "portfolioEntities": "50"
+                },
+                "alerts": false,
+                "wallets": "3",
+                "portfolioEntities": "20",
+                "notifications": {
+                    "wallet": false
+                }
+            },
+            "name": "free"
+        },
+        {
+            "active": true,
+            "created_at": "2022-06-01T08:19:58.625Z",
+            "expired_at": "2022-06-01T08:19:58.625Z",
+            "identifier": "subscriptions~3b57ae62-b015-4faa-b945-b8cc97c5a7a7",
+            "user_sub": "system",
+            "details": {
+                "portfolios": "1",
+                "staking": {
+                    "portfolios": "3",
+                    "portfolioEntities": "50"
+                },
+                "alerts": false,
+                "wallets": "3",
+                "portfolioEntities": "20",
+                "notifications": {
+                    "wallet": false
+                }
+            },
+            "name": "free"
+        },
+        {
+            "active": true,
+            "created_at": "2022-05-23T06:42:08.582Z",
+            "expired_at": "2022-05-23T06:42:08.582Z",
+            "identifier": "subscriptions~046712ea-f3b3-40eb-b253-65e752cccfd2",
+            "user_sub": "system",
+            "details": {
+                "portfolios": "1",
+                "staking": {
+                    "portfolios": "3",
+                    "portfolioEntities": "50"
+                },
+                "alerts": false,
+                "wallets": "3",
+                "portfolioEntities": "20",
+                "notifications": {
+                    "wallet": false
+                }
+            },
+            "name": "free"
+        },
+        {
+            "active": true,
+            "created_at": "2022-06-02T09:36:19.462Z",
+            "expired_at": "2022-06-02T09:36:19.462Z",
+            "identifier": "subscriptions~2eab4329-42d9-4d67-adc8-becf8371f92d",
+            "user_sub": "system",
+            "details": {
+                "portfolios": "1",
+                "staking": {
+                    "portfolios": "3",
+                    "portfolioEntities": "50"
+                },
+                "alerts": false,
+                "wallets": "3",
+                "portfolioEntities": "20",
+                "notifications": {
+                    "wallet": false
+                }
+            },
+            "name": "free",
+            "lastLogin": "2022-06-02T09:36:19.462Z"
+        },
+        {
+            "active": true,
+            "created_at": "2022-05-06T14:25:19.827Z",
+            "identifier": "subscription_setting~0548c8fd-48ab-494b-a432-e37427659339",
+            "user_sub": "system",
+            "details": {
+                "portfolios": 10000000000,
+                "staking": {
+                    "portfolios": 10000000000,
+                    "portfolioEntities": 10000000000
+                },
+                "alerts": true,
+                "wallets": 10000000000,
+                "portfolioEntities": 10000000000,
+                "notifications": {
+                    "wallet": true
+                }
+            },
+            "price": {
+                "discount_threshold_eulers": 4000,
+                "usd_month": 449.99,
+                "usd_month_discounted": 299.99
+            },
+            "name": "pro"
+        },
+        {
+            "active": true,
+            "created_at": "2022-06-10T07:32:43.647Z",
+            "expired_at": "2022-06-10T07:32:43.647Z",
+            "identifier": "subscriptions~acbbaf9d-3d6e-4962-8a40-fdbdfabbd8eb",
+            "user_sub": "system",
+            "details": {
+                "portfolios": "1",
+                "staking": {
+                    "portfolios": "3",
+                    "portfolioEntities": "50"
+                },
+                "alerts": false,
+                "wallets": "3",
+                "portfolioEntities": "20",
+                "notifications": {
+                    "wallet": false
+                }
+            },
+            "name": "free"
+        },
+        {
+            "active": true,
+            "created_at": "2022-06-03T13:39:48.243Z",
+            "expired_at": "2022-06-03T13:39:48.243Z",
+            "identifier": "subscriptions~513eca31-b8dc-4103-80c4-0b83020ec50f",
+            "user_sub": "system",
+            "details": {
+                "portfolios": "1",
+                "staking": {
+                    "portfolios": "3",
+                    "portfolioEntities": "50"
+                },
+                "alerts": false,
+                "wallets": "3",
+                "portfolioEntities": "20",
+                "notifications": {
+                    "wallet": false
+                }
+            },
+            "name": "free"
+        },
+        {
+            "active": true,
+            "created_at": "2022-05-27T17:19:43.808Z",
+            "expired_at": "2022-05-27T17:19:43.808Z",
+            "identifier": "subscriptions~68f67418-abdc-4c40-a5d3-b22e80ece8ff",
+            "user_sub": "system",
+            "details": {
+                "portfolios": "1",
+                "staking": {
+                    "portfolios": "3",
+                    "portfolioEntities": "50"
+                },
+                "alerts": false,
+                "wallets": "3",
+                "portfolioEntities": "20",
+                "notifications": {
+                    "wallet": false
+                }
+            },
+            "name": "free",
+            "lastLogin": "2022-05-27T17:19:43.808Z"
+        },
+        {
+            "active": true,
+            "created_at": "2022-05-27T06:31:25.323Z",
+            "expired_at": "2022-05-27T06:31:25.323Z",
+            "identifier": "subscriptions~09e89352-04fd-4477-87c8-c7a905b35122",
+            "user_sub": "system",
+            "details": {
+                "portfolios": "1",
+                "staking": {
+                    "portfolios": "3",
+                    "portfolioEntities": "50"
+                },
+                "alerts": false,
+                "wallets": "3",
+                "portfolioEntities": "20",
+                "notifications": {
+                    "wallet": false
+                }
+            },
+            "name": "free",
+            "lastLogin": "2022-04-27T06:35:51.351Z"
+        },
+        {
+            "active": true,
+            "created_at": "2022-06-01T08:16:39.080Z",
+            "expired_at": "2022-06-01T08:16:39.080Z",
+            "identifier": "subscriptions~6fe7f28d-7b39-4509-a0fd-81256dfa72bd",
+            "user_sub": "system",
+            "details": {
+                "portfolios": "1",
+                "staking": {
+                    "portfolios": "3",
+                    "portfolioEntities": "50"
+                },
+                "alerts": false,
+                "wallets": "3",
+                "portfolioEntities": "20",
+                "notifications": {
+                    "wallet": false
+                }
+            },
+            "name": "free"
+        },
+        {
+            "active": true,
+            "created_at": "2022-06-04T18:24:55.213Z",
+            "expired_at": "2022-06-04T18:24:55.213Z",
+            "identifier": "subscriptions~5877185c-3935-4da6-9525-5c3e852b23c2",
+            "user_sub": "system",
+            "details": {
+                "portfolios": "1",
+                "staking": {
+                    "portfolios": "3",
+                    "portfolioEntities": "50"
+                },
+                "alerts": false,
+                "wallets": "3",
+                "portfolioEntities": "20",
+                "notifications": {
+                    "wallet": false
+                }
+            },
+            "name": "free"
+        },
+        {
+            "active": true,
+            "created_at": "2022-05-27T09:28:21.763Z",
+            "expired_at": "2022-05-27T09:28:21.763Z",
+            "identifier": "subscriptions~4f6908e3-a5de-4d01-b591-00e8ef67c22d",
+            "user_sub": "system",
+            "details": {
+                "portfolios": "1",
+                "staking": {
+                    "portfolios": "3",
+                    "portfolioEntities": "50"
+                },
+                "alerts": false,
+                "wallets": "3",
+                "portfolioEntities": "20",
+                "notifications": {
+                    "wallet": false
+                }
+            },
+            "name": "free",
+            "lastLogin": "2022-04-28T13:49:53.915Z"
+        },
+        {
+            "active": true,
+            "created_at": "2022-05-29T12:36:41.237Z",
+            "expired_at": "2022-05-29T12:36:41.237Z",
+            "identifier": "subscriptions~90e4dea3-9e5e-4f94-b465-e8e181c8fecc",
+            "user_sub": "system",
+            "details": {
+                "portfolios": "1",
+                "staking": {
+                    "portfolios": "3",
+                    "portfolioEntities": "50"
+                },
+                "alerts": false,
+                "wallets": "3",
+                "portfolioEntities": "20",
+                "notifications": {
+                    "wallet": false
+                }
+            },
+            "name": "free"
+        },
+        {
+            "active": true,
+            "created_at": "2022-06-03T14:57:01.401Z",
+            "expired_at": "2022-06-03T14:57:01.401Z",
+            "identifier": "subscriptions~a280714b-5db3-41ba-a3e7-9964d553a754",
+            "user_sub": "system",
+            "details": {
+                "portfolios": "1",
+                "staking": {
+                    "portfolios": "3",
+                    "portfolioEntities": "50"
+                },
+                "alerts": false,
+                "wallets": "3",
+                "portfolioEntities": "20",
+                "notifications": {
+                    "wallet": false
+                }
+            },
+            "name": "free"
+        },
+        {
+            "active": true,
+            "created_at": "2022-05-06T14:25:19.827Z",
+            "identifier": "subscription_setting~a79df0bb-c6cf-4e43-adeb-cf4b50178870",
+            "user_sub": "system",
+            "details": {
+                "portfolios": 10000000000,
+                "staking": {
+                    "portfolios": 10000000000,
+                    "portfolioEntities": 10000000000
+                },
+                "alerts": true,
+                "wallets": 10000000000,
+                "portfolioEntities": 10000000000,
+                "notifications": {
+                    "wallet": true
+                }
+            },
+            "name": "enterprise"
+        },
+        {
+            "active": true,
+            "created_at": "2022-06-04T05:49:32.853Z",
+            "expired_at": "2022-06-04T05:49:32.853Z",
+            "identifier": "subscriptions~39fe8151-2ab7-4748-8294-8c321ad17863",
+            "user_sub": "system",
+            "details": {
+                "portfolios": "1",
+                "staking": {
+                    "portfolios": "3",
+                    "portfolioEntities": "50"
+                },
+                "alerts": false,
+                "wallets": "3",
+                "portfolioEntities": "20",
+                "notifications": {
+                    "wallet": false
+                }
+            },
+            "name": "free"
+        },
+        {
+            "active": true,
+            "created_at": "2022-05-21T11:30:03.937Z",
+            "expired_at": "2022-05-21T11:30:03.937Z",
+            "identifier": "subscriptions~49c4c761-91c0-4f13-9ea3-a066ad44b3eb",
+            "user_sub": "system",
+            "details": {
+                "portfolios": "1",
+                "staking": {
+                    "portfolios": "3",
+                    "portfolioEntities": "50"
+                },
+                "alerts": false,
+                "wallets": "3",
+                "portfolioEntities": "20",
+                "notifications": {
+                    "wallet": false
+                }
+            },
+            "name": "free"
+        },
+        {
+            "active": true,
+            "created_at": "2022-05-21T17:30:38.620Z",
+            "expired_at": "2022-05-21T17:30:38.620Z",
+            "identifier": "subscriptions~51e6c394-e78b-42e3-ae46-37da5499f170",
+            "user_sub": "system",
+            "details": {
+                "portfolios": "1",
+                "staking": {
+                    "portfolios": "3",
+                    "portfolioEntities": "50"
+                },
+                "alerts": false,
+                "wallets": "3",
+                "portfolioEntities": "20",
+                "notifications": {
+                    "wallet": false
+                }
+            },
+            "name": "free"
+        },
+        {
+            "active": true,
+            "created_at": "2022-06-01T07:50:25.133Z",
+            "expired_at": "2022-06-01T07:50:25.133Z",
+            "identifier": "subscriptions~bb4976aa-e8d7-46cf-802e-57df5d322f35",
+            "user_sub": "system",
+            "details": {
+                "portfolios": "1",
+                "staking": {
+                    "portfolios": "3",
+                    "portfolioEntities": "50"
+                },
+                "alerts": false,
+                "wallets": "3",
+                "portfolioEntities": "20",
+                "notifications": {
+                    "wallet": false
+                }
+            },
+            "name": "free"
+        },
+        {
+            "active": true,
+            "created_at": "2022-05-21T07:23:50.904Z",
+            "expired_at": "2022-05-21T07:23:50.904Z",
+            "identifier": "subscriptions~d93aaeb7-fe07-42b4-9a0e-ea590769755c",
+            "user_sub": "system",
+            "details": {
+                "portfolios": "1",
+                "staking": {
+                    "portfolios": "3",
+                    "portfolioEntities": "50"
+                },
+                "alerts": false,
+                "wallets": "3",
+                "portfolioEntities": "20",
+                "notifications": {
+                    "wallet": false
+                }
+            },
+            "name": "free"
+        },
+        {
+            "active": true,
+            "created_at": "2022-05-21T11:38:10.620Z",
+            "expired_at": "2022-05-21T11:38:10.620Z",
+            "identifier": "subscriptions~fc54cfba-a976-42c2-a600-ff82d0855f73",
+            "user_sub": "system",
+            "details": {
+                "portfolios": "1",
+                "staking": {
+                    "portfolios": "3",
+                    "portfolioEntities": "50"
+                },
+                "alerts": false,
+                "wallets": "3",
+                "portfolioEntities": "20",
+                "notifications": {
+                    "wallet": false
+                }
+            },
+            "name": "free",
+            "lastLogin": "2022-04-27T11:39:19.680Z"
+        },
+        {
+            "active": true,
+            "created_at": "2022-06-02T13:43:15.768Z",
+            "expired_at": "2022-06-02T13:43:15.768Z",
+            "identifier": "subscriptions~85bcaaed-70e6-4b07-b4cd-792c68842958",
+            "user_sub": "system",
+            "details": {
+                "alerts": false,
+                "portfolios": "1",
+                "staking": {
+                    "portfolioEntities": "50",
+                    "portfolios": "3"
+                },
+                "wallets": "3",
+                "portfolioEntities": "20",
+                "notifications": {
+                    "wallet": false
+                }
+            },
+            "name": "free",
+            "lastLogin": "2022-05-13T15:37:58.463Z"
+        }
+    ]
+        "Count":
+          type: integer
+          nullable: true
+          example: 74
+        "ScannedCount":
+          type: integer
+          nullable: true
+          example: 74
+    subscriptions_id:
+      type: object
+      properties:
+        "Item":
+          type: array
+          items:
+            type: object
+          example: {
+        "active": true,
+        "created_at": "2022-06-02T13:43:15.768Z",
+        "expired_at": "2022-06-02T13:43:15.768Z",
+        "identifier": "subscriptions~85bcaaed-70e6-4b07-b4cd-792c68842958",
+        "user_sub": "system",
+        "details": {
+            "alerts": false,
+            "portfolios": "1",
+            "staking": {
+                "portfolioEntities": "50",
+                "portfolios": "3"
+            },
+            "wallets": "3",
+            "portfolioEntities": "20",
+            "notifications": {
+                "wallet": false
+            }
+        },
+        "name": "free",
+        "lastLogin": "2022-05-13T15:37:58.463Z"
+    }
+    notifications:
+      type: object
+      properties:
+        items:
+          type: object
+          example: {
+        "isDelete": true,
+        "user_id": "53b8dfe2-89ea-4eb6-9c82-d740cfe5e192",
+        "created_at": "2022-05-12T11:05:17.155Z",
+        "deleted_at": "2022-05-16T12:51:39.190Z",
+        "readed_at": "2022-05-16T13:16:19.043Z",
+        "notification_id": "olX2Hi0yVMG7xnsHndmfAfBqmCQWeGSC",
+        "isRead": true
+    }
+    updates_notification:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Successfully updated"
+    updates_all_notifications:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Records Updated Successfully"
+    deletes_all_notifications: 
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Records Updated Successfully..."
+    Updates_user_email:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "User Profile updated successfully..."
+    Deletes_user_email:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "User Profile deleted successfully..."
+    Deletes_subscription:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Subscription deleted successfully..."
+        
+  
