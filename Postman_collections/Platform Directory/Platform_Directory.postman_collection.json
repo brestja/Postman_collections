@@ -1,0 +1,957 @@
+{
+	"info": {
+		"_postman_id": "5d2e4291-6e67-4d21-9444-08a1fa4eec94",
+		"name": "App - Platform - Directory",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18107576"
+	},
+	"item": [
+		{
+			"name": "Notifications",
+			"item": [
+				{
+					"name": "Get Notification by Id for user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Payload has all properties\", () => {\r",
+									"    pm.expect(response.Item.notification_id.toString().length).to.be.greaterThan(6);\r",
+									"    pm.expect(response.Item.user_sub.toString().length).to.be.greaterThan(6);\r",
+									"    pm.expect(response.Item.created_at).to.have.lengthOf(24);\r",
+									"    pm.expect(response.Item.readed_at).to.have.lengthOf(24);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJraWQiOiI0VmtFWUg2RXlpV3VLdUdINlArQ0JkZDd5MnZ1RHJtczk4WU04YlpZQTBNPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiJlMDY1ZmFhNS1lYWU0LTQzNWItYThiMC1kNTA1NjliZmJmOTEiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiaXNzIjoiaHR0cHM6XC9cL2NvZ25pdG8taWRwLnVzLWVhc3QtMS5hbWF6b25hd3MuY29tXC91cy1lYXN0LTFfMDZuc1dUaW50IiwiY29nbml0bzp1c2VybmFtZSI6ImUwNjVmYWE1LWVhZTQtNDM1Yi1hOGIwLWQ1MDU2OWJmYmY5MSIsIm9yaWdpbl9qdGkiOiJlZGY0OWE4ZC1mNDQxLTQ2YWEtODU1NC1iZjhlY2ZjZmM5ZjUiLCJhdWQiOiI3bHBqdGR2NzMxaWVncW0xbnZibzFxMjdsMyIsImV2ZW50X2lkIjoiYTVhZTI0NTUtNTQzMC00YzA2LWJmMzAtOGIyYjkxZmU4OTU4IiwidG9rZW5fdXNlIjoiaWQiLCJhdXRoX3RpbWUiOjE2NjU2Njc2MDQsImV4cCI6MTY2Njc0NTQ2MywiaWF0IjoxNjY2NzQxODYzLCJqdGkiOiJiMzIwNzEzNi0xN2NiLTRlMTgtYTkxMC1kNzJmNmIwOTdiNTgiLCJlbWFpbCI6Impvc2VicmVzdDI1QGdtYWlsLmNvbSJ9.vi59r35HwgfJewdgfTO2plJH1Vd7XccxC2KHAlwmFRnkWDhe9TPiAFEcmwgy-1UxdNYm9exzaAe31piNMjIgJPGAknfOehRjUoyfWTTggaViH7xJMpE_6qOsiDG550FeOy9ZOPV5lJrWp4mFVE3TAeBfryBHeTNnWGxLPp--BizRD6vLX1p30G3dqY2JOSx8RG229IDl6KuJ3ZpiFZTdaAwjtiqDU5mb6P5Pv8MuCu-TPB-rS0oVS4vHNUWilXY8n3ZYdZW0yy9XCRwnBNIafqPgwQEza9Ce53Wxz7cigldskO7Jn0Yah2ad8272D7J3XJ_CZveEaiC5ykJUOo7n9g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{notifications}}/users/:user_sub/notification/:notification_id",
+							"host": [
+								"{{notifications}}"
+							],
+							"path": [
+								"users",
+								":user_sub",
+								"notification",
+								":notification_id"
+							],
+							"variable": [
+								{
+									"key": "user_sub",
+									"value": "5da797a7-9ec7-4f50-84fb-9686ca62fa88"
+								},
+								{
+									"key": "notification_id",
+									"value": "a3TQHFCjPszqpl7zgD9Z7oKpQh17S35L"
+								}
+							]
+						},
+						"description": "Returns a notification for the given user ID"
+					},
+					"response": [
+						{
+							"name": "Get Notification by Id for user",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{notifications}}/users/:user_sub/notification/:notification_id",
+									"host": [
+										"{{notifications}}"
+									],
+									"path": [
+										"users",
+										":user_sub",
+										"notification",
+										":notification_id"
+									],
+									"variable": [
+										{
+											"key": "user_sub",
+											"value": "5da797a7-9ec7-4f50-84fb-9686ca62fa88"
+										},
+										{
+											"key": "notification_id",
+											"value": "a3TQHFCjPszqpl7zgD9Z7oKpQh17S35L"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"Item\": {\n        \"isDelete\": true,\n        \"created_at\": \"2022-06-07T12:50:24.245Z\",\n        \"deleted_at\": \"2022-06-30T14:37:27.353Z\",\n        \"readed_at\": \"2022-06-30T14:36:13.333Z\",\n        \"notification_id\": \"a3TQHFCjPszqpl7zgD9Z7oKpQh17S35L\",\n        \"user_sub\": \"5da797a7-9ec7-4f50-84fb-9686ca62fa88\",\n        \"isRead\": true\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Update isReaded and readed_at of notification",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJraWQiOiI0VmtFWUg2RXlpV3VLdUdINlArQ0JkZDd5MnZ1RHJtczk4WU04YlpZQTBNPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiJlMDY1ZmFhNS1lYWU0LTQzNWItYThiMC1kNTA1NjliZmJmOTEiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiaXNzIjoiaHR0cHM6XC9cL2NvZ25pdG8taWRwLnVzLWVhc3QtMS5hbWF6b25hd3MuY29tXC91cy1lYXN0LTFfMDZuc1dUaW50IiwiY29nbml0bzp1c2VybmFtZSI6ImUwNjVmYWE1LWVhZTQtNDM1Yi1hOGIwLWQ1MDU2OWJmYmY5MSIsIm9yaWdpbl9qdGkiOiJlZGY0OWE4ZC1mNDQxLTQ2YWEtODU1NC1iZjhlY2ZjZmM5ZjUiLCJhdWQiOiI3bHBqdGR2NzMxaWVncW0xbnZibzFxMjdsMyIsImV2ZW50X2lkIjoiYTVhZTI0NTUtNTQzMC00YzA2LWJmMzAtOGIyYjkxZmU4OTU4IiwidG9rZW5fdXNlIjoiaWQiLCJhdXRoX3RpbWUiOjE2NjU2Njc2MDQsImV4cCI6MTY2Njc0NTQ2MywiaWF0IjoxNjY2NzQxODYzLCJqdGkiOiJiMzIwNzEzNi0xN2NiLTRlMTgtYTkxMC1kNzJmNmIwOTdiNTgiLCJlbWFpbCI6Impvc2VicmVzdDI1QGdtYWlsLmNvbSJ9.vi59r35HwgfJewdgfTO2plJH1Vd7XccxC2KHAlwmFRnkWDhe9TPiAFEcmwgy-1UxdNYm9exzaAe31piNMjIgJPGAknfOehRjUoyfWTTggaViH7xJMpE_6qOsiDG550FeOy9ZOPV5lJrWp4mFVE3TAeBfryBHeTNnWGxLPp--BizRD6vLX1p30G3dqY2JOSx8RG229IDl6KuJ3ZpiFZTdaAwjtiqDU5mb6P5Pv8MuCu-TPB-rS0oVS4vHNUWilXY8n3ZYdZW0yy9XCRwnBNIafqPgwQEza9Ce53Wxz7cigldskO7Jn0Yah2ad8272D7J3XJ_CZveEaiC5ykJUOo7n9g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{notifications}}/users/:user_sub/notification/:notification_id",
+							"host": [
+								"{{notifications}}"
+							],
+							"path": [
+								"users",
+								":user_sub",
+								"notification",
+								":notification_id"
+							],
+							"variable": [
+								{
+									"key": "user_sub",
+									"value": "5da797a7-9ec7-4f50-84fb-9686ca62fa88"
+								},
+								{
+									"key": "notification_id",
+									"value": "a3TQHFCjPszqpl7zgD9Z7oKpQh17S35L"
+								}
+							]
+						},
+						"description": "Updates a specific notification"
+					},
+					"response": []
+				},
+				{
+					"name": "Update isReaded and readed_at for all notification(mark_as_all_read)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(response.message).to.eql(\"Records Updated Successfully\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{notifications}}/users/:user_id/notification",
+							"host": [
+								"{{notifications}}"
+							],
+							"path": [
+								"users",
+								":user_id",
+								"notification"
+							],
+							"variable": [
+								{
+									"key": "user_id",
+									"value": "53b8dfe2-89ea-4eb6-9c82-d740cfe5e192"
+								}
+							]
+						},
+						"description": "Updates all notifications"
+					},
+					"response": [
+						{
+							"name": "Update isReaded and readed_at for all notification(mark_as_all_read)",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{notifications}}/users/:user_id/notification",
+									"host": [
+										"{{notifications}}"
+									],
+									"path": [
+										"users",
+										":user_id",
+										"notification"
+									],
+									"variable": [
+										{
+											"key": "user_id",
+											"value": "53b8dfe2-89ea-4eb6-9c82-d740cfe5e192"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n \"message\": \"Records Updated Successfully\"\r\n}"
+						}
+					]
+				},
+				{
+					"name": "Update isDeleted and deleted_at for all notification(mark_as_all_delete)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Records Updated Successfully...\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{notifications}}/users/:user_id/notification",
+							"host": [
+								"{{notifications}}"
+							],
+							"path": [
+								"users",
+								":user_id",
+								"notification"
+							],
+							"variable": [
+								{
+									"key": "user_id",
+									"value": "53b8dfe2-89ea-4eb6-9c82-d740cfe5e192"
+								}
+							]
+						},
+						"description": "Deletes all notifications"
+					},
+					"response": [
+						{
+							"name": "Update isDeleted and deleted_at for all notification(mark_as_all_delete)",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://notifications.api.dev.euler.tools/users/:user_id/notification",
+									"protocol": "https",
+									"host": [
+										"notifications",
+										"api",
+										"dev",
+										"euler",
+										"tools"
+									],
+									"path": [
+										"users",
+										":user_id",
+										"notification"
+									],
+									"variable": [
+										{
+											"key": "user_id",
+											"value": "53b8dfe2-89ea-4eb6-9c82-d740cfe5e192"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n \"message\": \"Records Updated Successfully...\"\r\n}"
+						}
+					]
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Profiles",
+			"item": [
+				{
+					"name": "Get All User Profiles",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Payload has all properties\", () => {\r",
+									"    pm.expect(response.Items[0].status).to.eql(\"Verified\");\r",
+									"    pm.expect(response.Items[0].isBlocked).to.eql(false);\r",
+									"    pm.expect(response.Items[0].user_sub).to.have.lengthOf(36);\r",
+									"    \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJraWQiOiI0VmtFWUg2RXlpV3VLdUdINlArQ0JkZDd5MnZ1RHJtczk4WU04YlpZQTBNPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiJlMDY1ZmFhNS1lYWU0LTQzNWItYThiMC1kNTA1NjliZmJmOTEiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiaXNzIjoiaHR0cHM6XC9cL2NvZ25pdG8taWRwLnVzLWVhc3QtMS5hbWF6b25hd3MuY29tXC91cy1lYXN0LTFfMDZuc1dUaW50IiwiY29nbml0bzp1c2VybmFtZSI6ImUwNjVmYWE1LWVhZTQtNDM1Yi1hOGIwLWQ1MDU2OWJmYmY5MSIsIm9yaWdpbl9qdGkiOiJlZGY0OWE4ZC1mNDQxLTQ2YWEtODU1NC1iZjhlY2ZjZmM5ZjUiLCJhdWQiOiI3bHBqdGR2NzMxaWVncW0xbnZibzFxMjdsMyIsImV2ZW50X2lkIjoiYTVhZTI0NTUtNTQzMC00YzA2LWJmMzAtOGIyYjkxZmU4OTU4IiwidG9rZW5fdXNlIjoiaWQiLCJhdXRoX3RpbWUiOjE2NjU2Njc2MDQsImV4cCI6MTY2Njc0NTQ2MywiaWF0IjoxNjY2NzQxODYzLCJqdGkiOiJiMzIwNzEzNi0xN2NiLTRlMTgtYTkxMC1kNzJmNmIwOTdiNTgiLCJlbWFpbCI6Impvc2VicmVzdDI1QGdtYWlsLmNvbSJ9.vi59r35HwgfJewdgfTO2plJH1Vd7XccxC2KHAlwmFRnkWDhe9TPiAFEcmwgy-1UxdNYm9exzaAe31piNMjIgJPGAknfOehRjUoyfWTTggaViH7xJMpE_6qOsiDG550FeOy9ZOPV5lJrWp4mFVE3TAeBfryBHeTNnWGxLPp--BizRD6vLX1p30G3dqY2JOSx8RG229IDl6KuJ3ZpiFZTdaAwjtiqDU5mb6P5Pv8MuCu-TPB-rS0oVS4vHNUWilXY8n3ZYdZW0yy9XCRwnBNIafqPgwQEza9Ce53Wxz7cigldskO7Jn0Yah2ad8272D7J3XJ_CZveEaiC5ykJUOo7n9g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{directory}}/users/profiles",
+							"host": [
+								"{{directory}}"
+							],
+							"path": [
+								"users",
+								"profiles"
+							]
+						},
+						"description": "Returns all users profiles"
+					},
+					"response": [
+						{
+							"name": "Get All User Profiles",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://directory.api.dev.euler.tools/users/profiles",
+									"protocol": "https",
+									"host": [
+										"directory",
+										"api",
+										"dev",
+										"euler",
+										"tools"
+									],
+									"path": [
+										"users",
+										"profiles"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"Items\": [\n        {\n            \"isBlocked\": false,\n            \"updatedAt\": \"2022-06-30T19:24:21.697Z\",\n            \"status\": \"Verified\",\n            \"identifier\": \"jose@euler.tools\",\n            \"createdAt\": \"2022-06-01T14:21:33.574Z\",\n            \"user_sub\": \"bc7b9f74-5735-4818-aca9-fb50054679cf\"\n        }\n    ],\n    \"Count\": 1,\n    \"ScannedCount\": 1\n}"
+						}
+					]
+				},
+				{
+					"name": "Get User Profile by User Email",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJraWQiOiI0VmtFWUg2RXlpV3VLdUdINlArQ0JkZDd5MnZ1RHJtczk4WU04YlpZQTBNPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiJlMDY1ZmFhNS1lYWU0LTQzNWItYThiMC1kNTA1NjliZmJmOTEiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiaXNzIjoiaHR0cHM6XC9cL2NvZ25pdG8taWRwLnVzLWVhc3QtMS5hbWF6b25hd3MuY29tXC91cy1lYXN0LTFfMDZuc1dUaW50IiwiY29nbml0bzp1c2VybmFtZSI6ImUwNjVmYWE1LWVhZTQtNDM1Yi1hOGIwLWQ1MDU2OWJmYmY5MSIsIm9yaWdpbl9qdGkiOiJlZGY0OWE4ZC1mNDQxLTQ2YWEtODU1NC1iZjhlY2ZjZmM5ZjUiLCJhdWQiOiI3bHBqdGR2NzMxaWVncW0xbnZibzFxMjdsMyIsImV2ZW50X2lkIjoiYTVhZTI0NTUtNTQzMC00YzA2LWJmMzAtOGIyYjkxZmU4OTU4IiwidG9rZW5fdXNlIjoiaWQiLCJhdXRoX3RpbWUiOjE2NjU2Njc2MDQsImV4cCI6MTY2Njc0NTQ2MywiaWF0IjoxNjY2NzQxODYzLCJqdGkiOiJiMzIwNzEzNi0xN2NiLTRlMTgtYTkxMC1kNzJmNmIwOTdiNTgiLCJlbWFpbCI6Impvc2VicmVzdDI1QGdtYWlsLmNvbSJ9.vi59r35HwgfJewdgfTO2plJH1Vd7XccxC2KHAlwmFRnkWDhe9TPiAFEcmwgy-1UxdNYm9exzaAe31piNMjIgJPGAknfOehRjUoyfWTTggaViH7xJMpE_6qOsiDG550FeOy9ZOPV5lJrWp4mFVE3TAeBfryBHeTNnWGxLPp--BizRD6vLX1p30G3dqY2JOSx8RG229IDl6KuJ3ZpiFZTdaAwjtiqDU5mb6P5Pv8MuCu-TPB-rS0oVS4vHNUWilXY8n3ZYdZW0yy9XCRwnBNIafqPgwQEza9Ce53Wxz7cigldskO7Jn0Yah2ad8272D7J3XJ_CZveEaiC5ykJUOo7n9g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{directory}}/users/profiles/:email",
+							"host": [
+								"{{directory}}"
+							],
+							"path": [
+								"users",
+								"profiles",
+								":email"
+							],
+							"variable": [
+								{
+									"key": "email",
+									"value": "josebrest25@gmail.com"
+								}
+							]
+						},
+						"description": "Returns user profiles related to the given email"
+					},
+					"response": [
+						{
+							"name": "Get User Profile by User Email",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://directory.api.dev.euler.tools/users/profiles/:email",
+									"protocol": "https",
+									"host": [
+										"directory",
+										"api",
+										"dev",
+										"euler",
+										"tools"
+									],
+									"path": [
+										"users",
+										"profiles",
+										":email"
+									],
+									"variable": [
+										{
+											"key": "email",
+											"value": "jose@euler.tools"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"Items\": [\n        {\n            \"isBlocked\": false,\n            \"updatedAt\": \"2022-06-30T19:24:21.697Z\",\n            \"status\": \"Verified\",\n            \"identifier\": \"jose@euler.tools\",\n            \"createdAt\": \"2022-06-01T14:21:33.574Z\",\n            \"user_sub\": \"bc7b9f74-5735-4818-aca9-fb50054679cf\"\n        }\n    ],\n    \"Count\": 1,\n    \"ScannedCount\": 1\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete User Profile",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"User Profile deleted successfully...\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{directory}}/users/profiles/:email",
+							"host": [
+								"{{directory}}"
+							],
+							"path": [
+								"users",
+								"profiles",
+								":email"
+							],
+							"variable": [
+								{
+									"key": "email",
+									"value": "tebayoso@gmail.com"
+								}
+							]
+						},
+						"description": "Deletes user profiles related to the given email"
+					},
+					"response": [
+						{
+							"name": "Delete User Profile",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://directory.api.dev.euler.tools/users/profiles/:email",
+									"protocol": "https",
+									"host": [
+										"directory",
+										"api",
+										"dev",
+										"euler",
+										"tools"
+									],
+									"path": [
+										"users",
+										"profiles",
+										":email"
+									],
+									"variable": [
+										{
+											"key": "email",
+											"value": "tebayoso@gmail.com"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n \"message\": \"User Profile deleted successfully...\"\r\n}"
+						}
+					]
+				},
+				{
+					"name": "Update User Profile",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"User Profile updated successfully...\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJraWQiOiI0VmtFWUg2RXlpV3VLdUdINlArQ0JkZDd5MnZ1RHJtczk4WU04YlpZQTBNPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiJlMDY1ZmFhNS1lYWU0LTQzNWItYThiMC1kNTA1NjliZmJmOTEiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiaXNzIjoiaHR0cHM6XC9cL2NvZ25pdG8taWRwLnVzLWVhc3QtMS5hbWF6b25hd3MuY29tXC91cy1lYXN0LTFfMDZuc1dUaW50IiwiY29nbml0bzp1c2VybmFtZSI6ImUwNjVmYWE1LWVhZTQtNDM1Yi1hOGIwLWQ1MDU2OWJmYmY5MSIsIm9yaWdpbl9qdGkiOiJlZGY0OWE4ZC1mNDQxLTQ2YWEtODU1NC1iZjhlY2ZjZmM5ZjUiLCJhdWQiOiI3bHBqdGR2NzMxaWVncW0xbnZibzFxMjdsMyIsImV2ZW50X2lkIjoiYTVhZTI0NTUtNTQzMC00YzA2LWJmMzAtOGIyYjkxZmU4OTU4IiwidG9rZW5fdXNlIjoiaWQiLCJhdXRoX3RpbWUiOjE2NjU2Njc2MDQsImV4cCI6MTY2Njc0NTQ2MywiaWF0IjoxNjY2NzQxODYzLCJqdGkiOiJiMzIwNzEzNi0xN2NiLTRlMTgtYTkxMC1kNzJmNmIwOTdiNTgiLCJlbWFpbCI6Impvc2VicmVzdDI1QGdtYWlsLmNvbSJ9.vi59r35HwgfJewdgfTO2plJH1Vd7XccxC2KHAlwmFRnkWDhe9TPiAFEcmwgy-1UxdNYm9exzaAe31piNMjIgJPGAknfOehRjUoyfWTTggaViH7xJMpE_6qOsiDG550FeOy9ZOPV5lJrWp4mFVE3TAeBfryBHeTNnWGxLPp--BizRD6vLX1p30G3dqY2JOSx8RG229IDl6KuJ3ZpiFZTdaAwjtiqDU5mb6P5Pv8MuCu-TPB-rS0oVS4vHNUWilXY8n3ZYdZW0yy9XCRwnBNIafqPgwQEza9Ce53Wxz7cigldskO7Jn0Yah2ad8272D7J3XJ_CZveEaiC5ykJUOo7n9g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"first_name\": \"Jorge\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{directory}}/users/profiles/:email",
+							"host": [
+								"{{directory}}"
+							],
+							"path": [
+								"users",
+								"profiles",
+								":email"
+							],
+							"variable": [
+								{
+									"key": "email",
+									"value": "jose@euler.tools"
+								}
+							]
+						},
+						"description": "Updates user profiles related to the given email"
+					},
+					"response": [
+						{
+							"name": "Update User Profile",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"first_name\": \"Jorge\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://directory.api.dev.euler.tools/users/profiles/:email",
+									"protocol": "https",
+									"host": [
+										"directory",
+										"api",
+										"dev",
+										"euler",
+										"tools"
+									],
+									"path": [
+										"users",
+										"profiles",
+										":email"
+									],
+									"variable": [
+										{
+											"key": "email",
+											"value": "jorge@euler.tools"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n \"message\": \"User Profile updated successfully...\"\r\n}"
+						}
+					]
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Subscriptions",
+			"item": [
+				{
+					"name": "Get All Subscriptions",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJraWQiOiI0VmtFWUg2RXlpV3VLdUdINlArQ0JkZDd5MnZ1RHJtczk4WU04YlpZQTBNPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiJlMDY1ZmFhNS1lYWU0LTQzNWItYThiMC1kNTA1NjliZmJmOTEiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiaXNzIjoiaHR0cHM6XC9cL2NvZ25pdG8taWRwLnVzLWVhc3QtMS5hbWF6b25hd3MuY29tXC91cy1lYXN0LTFfMDZuc1dUaW50IiwiY29nbml0bzp1c2VybmFtZSI6ImUwNjVmYWE1LWVhZTQtNDM1Yi1hOGIwLWQ1MDU2OWJmYmY5MSIsIm9yaWdpbl9qdGkiOiJlZGY0OWE4ZC1mNDQxLTQ2YWEtODU1NC1iZjhlY2ZjZmM5ZjUiLCJhdWQiOiI3bHBqdGR2NzMxaWVncW0xbnZibzFxMjdsMyIsImV2ZW50X2lkIjoiYTVhZTI0NTUtNTQzMC00YzA2LWJmMzAtOGIyYjkxZmU4OTU4IiwidG9rZW5fdXNlIjoiaWQiLCJhdXRoX3RpbWUiOjE2NjU2Njc2MDQsImV4cCI6MTY2Njc0NTQ2MywiaWF0IjoxNjY2NzQxODYzLCJqdGkiOiJiMzIwNzEzNi0xN2NiLTRlMTgtYTkxMC1kNzJmNmIwOTdiNTgiLCJlbWFpbCI6Impvc2VicmVzdDI1QGdtYWlsLmNvbSJ9.vi59r35HwgfJewdgfTO2plJH1Vd7XccxC2KHAlwmFRnkWDhe9TPiAFEcmwgy-1UxdNYm9exzaAe31piNMjIgJPGAknfOehRjUoyfWTTggaViH7xJMpE_6qOsiDG550FeOy9ZOPV5lJrWp4mFVE3TAeBfryBHeTNnWGxLPp--BizRD6vLX1p30G3dqY2JOSx8RG229IDl6KuJ3ZpiFZTdaAwjtiqDU5mb6P5Pv8MuCu-TPB-rS0oVS4vHNUWilXY8n3ZYdZW0yy9XCRwnBNIafqPgwQEza9Ce53Wxz7cigldskO7Jn0Yah2ad8272D7J3XJ_CZveEaiC5ykJUOo7n9g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{directory}}/users/subscriptions",
+							"host": [
+								"{{directory}}"
+							],
+							"path": [
+								"users",
+								"subscriptions"
+							]
+						},
+						"description": "Returns all subscriptions"
+					},
+					"response": [
+						{
+							"name": "Get All Subscriptions",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://directory.api.dev.euler.tools/users/subscriptions",
+									"protocol": "https",
+									"host": [
+										"directory",
+										"api",
+										"dev",
+										"euler",
+										"tools"
+									],
+									"path": [
+										"users",
+										"subscriptions"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"Items\": [\n        {\n            \"user_sub\": \"e065faa5-eae4-435b-a8b0-d50569bfbf91\",\n            \"identifier\": \"account~cacb3af2-54bd-4141-a444-ef8ba57fd51d\"\n        },\n        {\n            \"created_at\": \"2022-08-22T13:36:37.159Z\",\n            \"subscription\": \"free\",\n            \"status\": \"confirmed\",\n            \"identifier\": \"subscription~ed0836f7-fabe-432b-9275-749ff3695a29\",\n            \"user_sub\": \"e065faa5-eae4-435b-a8b0-d50569bfbf91\",\n            \"details\": {}\n        }\n    ],\n    \"Count\": 2,\n    \"ScannedCount\": 2\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Subscription by Id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJraWQiOiI0VmtFWUg2RXlpV3VLdUdINlArQ0JkZDd5MnZ1RHJtczk4WU04YlpZQTBNPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiJlMDY1ZmFhNS1lYWU0LTQzNWItYThiMC1kNTA1NjliZmJmOTEiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiaXNzIjoiaHR0cHM6XC9cL2NvZ25pdG8taWRwLnVzLWVhc3QtMS5hbWF6b25hd3MuY29tXC91cy1lYXN0LTFfMDZuc1dUaW50IiwiY29nbml0bzp1c2VybmFtZSI6ImUwNjVmYWE1LWVhZTQtNDM1Yi1hOGIwLWQ1MDU2OWJmYmY5MSIsIm9yaWdpbl9qdGkiOiJlZGY0OWE4ZC1mNDQxLTQ2YWEtODU1NC1iZjhlY2ZjZmM5ZjUiLCJhdWQiOiI3bHBqdGR2NzMxaWVncW0xbnZibzFxMjdsMyIsImV2ZW50X2lkIjoiYTVhZTI0NTUtNTQzMC00YzA2LWJmMzAtOGIyYjkxZmU4OTU4IiwidG9rZW5fdXNlIjoiaWQiLCJhdXRoX3RpbWUiOjE2NjU2Njc2MDQsImV4cCI6MTY2Njc0NTQ2MywiaWF0IjoxNjY2NzQxODYzLCJqdGkiOiJiMzIwNzEzNi0xN2NiLTRlMTgtYTkxMC1kNzJmNmIwOTdiNTgiLCJlbWFpbCI6Impvc2VicmVzdDI1QGdtYWlsLmNvbSJ9.vi59r35HwgfJewdgfTO2plJH1Vd7XccxC2KHAlwmFRnkWDhe9TPiAFEcmwgy-1UxdNYm9exzaAe31piNMjIgJPGAknfOehRjUoyfWTTggaViH7xJMpE_6qOsiDG550FeOy9ZOPV5lJrWp4mFVE3TAeBfryBHeTNnWGxLPp--BizRD6vLX1p30G3dqY2JOSx8RG229IDl6KuJ3ZpiFZTdaAwjtiqDU5mb6P5Pv8MuCu-TPB-rS0oVS4vHNUWilXY8n3ZYdZW0yy9XCRwnBNIafqPgwQEza9Ce53Wxz7cigldskO7Jn0Yah2ad8272D7J3XJ_CZveEaiC5ykJUOo7n9g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJraWQiOiJkU3V6bWEycnpXQ0hnamk4MGFkN3VJVUxkRE15SWluOVJ2ZEtTYmV3THljPSIsImFsZyI6IlJTMjU2In0.eyJhdF9oYXNoIjoiWHZuMXFFc3JFdll2RE4zV2RVYmZRUSIsInN1YiI6IjY5NjIzZTk4LWU4ZGYtNDljMS05YmU2LWU0MjhkMjI5ZGYyOCIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAudXMtZWFzdC0xLmFtYXpvbmF3cy5jb21cL3VzLWVhc3QtMV9Ha29zMnh6OWgiLCJjb2duaXRvOnVzZXJuYW1lIjoiNjk2MjNlOTgtZThkZi00OWMxLTliZTYtZTQyOGQyMjlkZjI4Iiwib3JpZ2luX2p0aSI6IjcxZjU4NmZhLTYyMmEtNGVkZi05YmRiLWYyNjU5MmY4YzIzMCIsImF1ZCI6IjgxZDNndHF1cDdzMjlrOG5oa3RjcDcybnMiLCJ0b2tlbl91c2UiOiJpZCIsImF1dGhfdGltZSI6MTY1MjY4MjQwMCwiZXhwIjoxNjUyNjg2MDAwLCJpYXQiOjE2NTI2ODI0MDAsImp0aSI6ImI4OTdkYmIyLTg0NTUtNDA2My04NGQ0LWRhOGI0OWZlNWRiNyIsImVtYWlsIjoiaml0ZW5kcmEubXVyYWRuYXIuZmlkZWxAZ21haWwuY29tIn0.cw26ZUIfpZ7XIWFVOHSYCtS7jtvwzjvTOki4p93YzZMsVJwuhcF5mi8lYOPkNM2nQhO7fj76_tAJTy76RJwZDXXlLXm0068PTcgOkqiHPz2ixC0Vg_BqxQL9rbGyzWVv1a2O1TjAT7AoWIYFPjLWPKQobJX1C_Yo4TnOJe7fpHhZfiim6gk5NmFmcCW4lT86uxsgjbelKdriyxU8RVHdrssBBNBrkYJuUUk4t92kU8CLDWDXr8pMQUOFBHRll1VOnqNj9C6NOyM5y6K7DpB33G98lGMQvSH400Wq3yPZPzTtUfjJLbWYDlc-Vj4aAAu9nBdpJIS2UqH7wizjn6Pjzg",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{directory}}/users/subscriptions/:subscription_id",
+							"host": [
+								"{{directory}}"
+							],
+							"path": [
+								"users",
+								"subscriptions",
+								":subscription_id"
+							],
+							"variable": [
+								{
+									"key": "subscription_id",
+									"value": "subscription~ed0836f7-fabe-432b-9275-749ff3695a29"
+								}
+							]
+						},
+						"description": "Returns a subscription for the given id"
+					},
+					"response": [
+						{
+							"name": "Get Subscription by Id",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJraWQiOiJkU3V6bWEycnpXQ0hnamk4MGFkN3VJVUxkRE15SWluOVJ2ZEtTYmV3THljPSIsImFsZyI6IlJTMjU2In0.eyJhdF9oYXNoIjoiWHZuMXFFc3JFdll2RE4zV2RVYmZRUSIsInN1YiI6IjY5NjIzZTk4LWU4ZGYtNDljMS05YmU2LWU0MjhkMjI5ZGYyOCIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAudXMtZWFzdC0xLmFtYXpvbmF3cy5jb21cL3VzLWVhc3QtMV9Ha29zMnh6OWgiLCJjb2duaXRvOnVzZXJuYW1lIjoiNjk2MjNlOTgtZThkZi00OWMxLTliZTYtZTQyOGQyMjlkZjI4Iiwib3JpZ2luX2p0aSI6IjcxZjU4NmZhLTYyMmEtNGVkZi05YmRiLWYyNjU5MmY4YzIzMCIsImF1ZCI6IjgxZDNndHF1cDdzMjlrOG5oa3RjcDcybnMiLCJ0b2tlbl91c2UiOiJpZCIsImF1dGhfdGltZSI6MTY1MjY4MjQwMCwiZXhwIjoxNjUyNjg2MDAwLCJpYXQiOjE2NTI2ODI0MDAsImp0aSI6ImI4OTdkYmIyLTg0NTUtNDA2My04NGQ0LWRhOGI0OWZlNWRiNyIsImVtYWlsIjoiaml0ZW5kcmEubXVyYWRuYXIuZmlkZWxAZ21haWwuY29tIn0.cw26ZUIfpZ7XIWFVOHSYCtS7jtvwzjvTOki4p93YzZMsVJwuhcF5mi8lYOPkNM2nQhO7fj76_tAJTy76RJwZDXXlLXm0068PTcgOkqiHPz2ixC0Vg_BqxQL9rbGyzWVv1a2O1TjAT7AoWIYFPjLWPKQobJX1C_Yo4TnOJe7fpHhZfiim6gk5NmFmcCW4lT86uxsgjbelKdriyxU8RVHdrssBBNBrkYJuUUk4t92kU8CLDWDXr8pMQUOFBHRll1VOnqNj9C6NOyM5y6K7DpB33G98lGMQvSH400Wq3yPZPzTtUfjJLbWYDlc-Vj4aAAu9nBdpJIS2UqH7wizjn6Pjzg",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "https://directory.api.dev.euler.tools/users/subscriptions/:subscription_id",
+									"protocol": "https",
+									"host": [
+										"directory",
+										"api",
+										"dev",
+										"euler",
+										"tools"
+									],
+									"path": [
+										"users",
+										"subscriptions",
+										":subscription_id"
+									],
+									"variable": [
+										{
+											"key": "subscription_id",
+											"value": "subscription~ed0836f7-fabe-432b-9275-749ff3695a29"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"Items\": [\n        {\n            \"created_at\": \"2022-08-22T13:36:37.159Z\",\n            \"subscription\": \"free\",\n            \"status\": \"confirmed\",\n            \"identifier\": \"subscription~ed0836f7-fabe-432b-9275-749ff3695a29\",\n            \"user_sub\": \"e065faa5-eae4-435b-a8b0-d50569bfbf91\",\n            \"details\": {}\n        }\n    ],\n    \"Count\": 1,\n    \"ScannedCount\": 1\n}"
+						}
+					]
+				},
+				{
+					"name": "Deletes a subscription",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJraWQiOiI0VmtFWUg2RXlpV3VLdUdINlArQ0JkZDd5MnZ1RHJtczk4WU04YlpZQTBNPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiJlMDY1ZmFhNS1lYWU0LTQzNWItYThiMC1kNTA1NjliZmJmOTEiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiaXNzIjoiaHR0cHM6XC9cL2NvZ25pdG8taWRwLnVzLWVhc3QtMS5hbWF6b25hd3MuY29tXC91cy1lYXN0LTFfMDZuc1dUaW50IiwiY29nbml0bzp1c2VybmFtZSI6ImUwNjVmYWE1LWVhZTQtNDM1Yi1hOGIwLWQ1MDU2OWJmYmY5MSIsIm9yaWdpbl9qdGkiOiJlZGY0OWE4ZC1mNDQxLTQ2YWEtODU1NC1iZjhlY2ZjZmM5ZjUiLCJhdWQiOiI3bHBqdGR2NzMxaWVncW0xbnZibzFxMjdsMyIsImV2ZW50X2lkIjoiYTVhZTI0NTUtNTQzMC00YzA2LWJmMzAtOGIyYjkxZmU4OTU4IiwidG9rZW5fdXNlIjoiaWQiLCJhdXRoX3RpbWUiOjE2NjU2Njc2MDQsImV4cCI6MTY2Njc0NTQ2MywiaWF0IjoxNjY2NzQxODYzLCJqdGkiOiJiMzIwNzEzNi0xN2NiLTRlMTgtYTkxMC1kNzJmNmIwOTdiNTgiLCJlbWFpbCI6Impvc2VicmVzdDI1QGdtYWlsLmNvbSJ9.vi59r35HwgfJewdgfTO2plJH1Vd7XccxC2KHAlwmFRnkWDhe9TPiAFEcmwgy-1UxdNYm9exzaAe31piNMjIgJPGAknfOehRjUoyfWTTggaViH7xJMpE_6qOsiDG550FeOy9ZOPV5lJrWp4mFVE3TAeBfryBHeTNnWGxLPp--BizRD6vLX1p30G3dqY2JOSx8RG229IDl6KuJ3ZpiFZTdaAwjtiqDU5mb6P5Pv8MuCu-TPB-rS0oVS4vHNUWilXY8n3ZYdZW0yy9XCRwnBNIafqPgwQEza9Ce53Wxz7cigldskO7Jn0Yah2ad8272D7J3XJ_CZveEaiC5ykJUOo7n9g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{directory}}/users/subscriptions/:subscription_id",
+							"host": [
+								"{{directory}}"
+							],
+							"path": [
+								"users",
+								"subscriptions",
+								":subscription_id"
+							],
+							"variable": [
+								{
+									"key": "subscription_id",
+									"value": "subscription~ed0836f7-fabe-432b-9275-749ff3695a29"
+								}
+							]
+						},
+						"description": "Delete a subscription for the given id"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{idToken}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
