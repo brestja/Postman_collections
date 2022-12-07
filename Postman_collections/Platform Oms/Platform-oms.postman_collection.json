@@ -1,0 +1,974 @@
+{
+	"info": {
+		"_postman_id": "71ef9c3c-26d9-4ec1-9a01-f77eb910cc34",
+		"name": "App - Platform-oms",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18107576"
+	},
+	"item": [
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "Get Product By Id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Payload has all properties\", () => {\r",
+									"    pm.expect(response.Items[0].user_sub).to.eql(\"products\");\r",
+									"    pm.expect(response.Items[0].created_at).to.have.lengthOf(24);\r",
+									"    pm.expect(response.Items[0].deleted_at).to.have.lengthOf(24);\r",
+									"    pm.expect(response.Items[0].identifier.length).to.be.greaterThan(5);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{products}}/catalogs/products/:id",
+							"host": [
+								"{{products}}"
+							],
+							"path": [
+								"catalogs",
+								"products",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "14sjw25"
+								}
+							]
+						},
+						"description": "Retuns products by the given Id"
+					},
+					"response": [
+						{
+							"name": "Get Products By Id",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://7812dbbb-00ca-4552-8034-28e8fab39f12.mock.pstmn.io/catalogs/products/:id",
+									"protocol": "https",
+									"host": [
+										"7812dbbb-00ca-4552-8034-28e8fab39f12",
+										"mock",
+										"pstmn",
+										"io"
+									],
+									"path": [
+										"catalogs",
+										"products",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "14sjw25"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"Items\": [\n        {\n            \"isDelete\": true,\n            \"user_sub\": \"products\",\n            \"created_at\": \"2022-06-24T17:34:49.084Z\",\n            \"deleted_at\": \"2022-06-24T17:34:50.047Z\",\n            \"identifier\": \"14sjw25\"\n        }\n    ],\n    \"Count\": 1,\n    \"ScannedCount\": 1\n}"
+						}
+					]
+				},
+				{
+					"name": "Post products",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Records Inserted Successfully...\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"identifier\": \"14sjw25\",\n    \"product_name\": \"XYZ PRODUCTS\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{products}}/catalogs/products",
+							"host": [
+								"{{products}}"
+							],
+							"path": [
+								"catalogs",
+								"products"
+							]
+						},
+						"description": "Creates a products"
+					},
+					"response": [
+						{
+							"name": "Post products",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"identifier\": \"14sjw25\",\n    \"product_name\": \"XYZ PRODUCTS\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{products}}/catalogs/products",
+									"host": [
+										"{{products}}"
+									],
+									"path": [
+										"catalogs",
+										"products"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 30 Jun 2022 20:36:39 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "34"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "x-amzn-RequestId",
+									"value": "0bd334ca-2bc2-491d-a163-f9b0a1a112fd"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": ""
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type"
+								},
+								{
+									"key": "x-amz-apigw-id",
+									"value": "UjZloFvDIAMFt1A="
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "OPTIONS,POST,GET,PUT,DELETE,PATCH"
+								},
+								{
+									"key": "X-Amzn-Trace-Id",
+									"value": "Root=1-62be0957-4e7768ea2b89f365707f9b8b;Sampled=0"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								}
+							],
+							"cookie": [],
+							"body": "\"Records Inserted Successfully...\""
+						}
+					]
+				},
+				{
+					"name": "Put New fields",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Products updated successfully...\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{products}}/catalogs/products/:id",
+							"host": [
+								"{{products}}"
+							],
+							"path": [
+								"catalogs",
+								"products",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "14sjw25"
+								}
+							]
+						},
+						"description": "Update a product by the given Id"
+					},
+					"response": [
+						{
+							"name": "Put New fields",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "https://7812dbbb-00ca-4552-8034-28e8fab39f12.mock.pstmn.io/catalogs/products/:id",
+									"protocol": "https",
+									"host": [
+										"7812dbbb-00ca-4552-8034-28e8fab39f12",
+										"mock",
+										"pstmn",
+										"io"
+									],
+									"path": [
+										"catalogs",
+										"products",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "14sjw25"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n \"message\": \"Products updated successfully...\"\r\n}"
+						}
+					]
+				},
+				{
+					"name": "Deletes product",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Records Updated Successfully...\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{products}}/catalogs/products/:id",
+							"host": [
+								"{{products}}"
+							],
+							"path": [
+								"catalogs",
+								"products",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "14sjw25"
+								}
+							]
+						},
+						"description": "Delete a product by the given Id"
+					},
+					"response": [
+						{
+							"name": "Delete Product",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://7812dbbb-00ca-4552-8034-28e8fab39f12.mock.pstmn.io/catalogs/products/:id",
+									"protocol": "https",
+									"host": [
+										"7812dbbb-00ca-4552-8034-28e8fab39f12",
+										"mock",
+										"pstmn",
+										"io"
+									],
+									"path": [
+										"catalogs",
+										"products",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "14sjw25"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n \"message\": \"Records Updated Successfully...\"\r\n}"
+						}
+					]
+				},
+				{
+					"name": "Get products",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Payload has all properties\", () => {\r",
+									"    pm.expect(response.Items[0].user_sub).to.eql(\"products\");\r",
+									"    pm.expect(response.Items[0].created_at).to.have.lengthOf(24);\r",
+									"    pm.expect(response.Items[0].deleted_at).to.have.lengthOf(24);\r",
+									"    pm.expect(response.Items[0].identifier.length).to.be.greaterThan(5);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{products}}/catalogs/products",
+							"host": [
+								"{{products}}"
+							],
+							"path": [
+								"catalogs",
+								"products"
+							]
+						},
+						"description": "Get all products"
+					},
+					"response": [
+						{
+							"name": "Get Products",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{products}}/catalogs/products",
+									"host": [
+										"{{products}}"
+									],
+									"path": [
+										"catalogs",
+										"products"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 30 Jun 2022 20:37:08 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "181"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "x-amzn-RequestId",
+									"value": "28cb4a3e-376b-4a7f-9b30-1341d1acdcee"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": ""
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type"
+								},
+								{
+									"key": "x-amz-apigw-id",
+									"value": "UjZqKHqiIAMFu9g="
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "OPTIONS,POST,GET,PUT,DELETE,PATCH"
+								},
+								{
+									"key": "X-Amzn-Trace-Id",
+									"value": "Root=1-62be0974-447629e561be032f31eeb1e6;Sampled=0"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"Items\": [\n        {\n            \"isDelete\": true,\n            \"user_sub\": \"products\",\n            \"created_at\": \"2022-06-30T20:36:39.074Z\",\n            \"deleted_at\": \"2022-06-30T20:36:57.884Z\",\n            \"identifier\": \"14sjw25\"\n        }\n    ],\n    \"Count\": 1,\n    \"ScannedCount\": 1\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Orders",
+			"item": [
+				{
+					"name": "Get order by id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Payload has all properties\", () => {\r",
+									"    pm.expect(response.Items[0].user_sub).to.eql(\"orders\");\r",
+									"    pm.expect(response.Items[0].created_at).to.have.lengthOf(24);\r",
+									"    pm.expect(response.Items[0].deleted_at).to.have.lengthOf(24);\r",
+									"    pm.expect(response.Items[0].identifier.length).to.be.greaterThan(5);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{orders}}/catalogs/orders/:id",
+							"host": [
+								"{{orders}}"
+							],
+							"path": [
+								"catalogs",
+								"orders",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "14sjw25"
+								}
+							]
+						},
+						"description": "Retuns order by the given Id"
+					},
+					"response": [
+						{
+							"name": "Get Orders By Id",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://7812dbbb-00ca-4552-8034-28e8fab39f12.mock.pstmn.io/catalogs/orders/:id",
+									"protocol": "https",
+									"host": [
+										"7812dbbb-00ca-4552-8034-28e8fab39f12",
+										"mock",
+										"pstmn",
+										"io"
+									],
+									"path": [
+										"catalogs",
+										"orders",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "14sjw25"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"Items\": [\n        {\n            \"isDelete\": true,\n            \"created_at\": \"2022-06-30T20:37:40.829Z\",\n            \"deleted_at\": \"2022-06-30T20:37:57.809Z\",\n            \"identifier\": \"14sjw25\",\n            \"category\": \"products\",\n            \"user_sub\": \"orders\"\n        }\n    ],\n    \"Count\": 1,\n    \"ScannedCount\": 1\n}"
+						}
+					]
+				},
+				{
+					"name": "Creates orders",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Records Inserted Successfully...\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"identifier\": \"14sjw25\",\n    \"order_name\": \"XYZ PRODUCTS\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{orders}}/catalogs/orders",
+							"host": [
+								"{{orders}}"
+							],
+							"path": [
+								"catalogs",
+								"orders"
+							]
+						},
+						"description": "Creates an order"
+					},
+					"response": [
+						{
+							"name": "Post orders",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"identifier\": \"14sjw25\",\n    \"order_name\": \"XYZ PRODUCTS\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://7812dbbb-00ca-4552-8034-28e8fab39f12.mock.pstmn.io/catalogs/orders",
+									"protocol": "https",
+									"host": [
+										"7812dbbb-00ca-4552-8034-28e8fab39f12",
+										"mock",
+										"pstmn",
+										"io"
+									],
+									"path": [
+										"catalogs",
+										"orders"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n \"message\": \"Records Inserted Successfully...\"\r\n}"
+						}
+					]
+				},
+				{
+					"name": "Put New fields",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"orders updated successfully...\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"category\": \"products\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{orders}}/catalogs/orders/:id",
+							"host": [
+								"{{orders}}"
+							],
+							"path": [
+								"catalogs",
+								"orders",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "14sjw25"
+								}
+							]
+						},
+						"description": "Updates an order by the given Id"
+					},
+					"response": [
+						{
+							"name": "Put New fields",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"category\": \"products\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://7812dbbb-00ca-4552-8034-28e8fab39f12.mock.pstmn.io/catalogs/orders/:id",
+									"protocol": "https",
+									"host": [
+										"7812dbbb-00ca-4552-8034-28e8fab39f12",
+										"mock",
+										"pstmn",
+										"io"
+									],
+									"path": [
+										"catalogs",
+										"orders",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "14sjw25"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n \"message\": \"Orders updated successfully...\"\r\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete Orders",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Records Updated Successfully...\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{orders}}/catalogs/orders/:id",
+							"host": [
+								"{{orders}}"
+							],
+							"path": [
+								"catalogs",
+								"orders",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "14sjw25"
+								}
+							]
+						},
+						"description": "Deletes an order by the given Id"
+					},
+					"response": [
+						{
+							"name": "Delete Orders",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://7812dbbb-00ca-4552-8034-28e8fab39f12.mock.pstmn.io/catalogs/orders/:id",
+									"protocol": "https",
+									"host": [
+										"7812dbbb-00ca-4552-8034-28e8fab39f12",
+										"mock",
+										"pstmn",
+										"io"
+									],
+									"path": [
+										"catalogs",
+										"orders",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "14sjw25"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n \"message\": \"Records Updated Successfully...\"\r\n}"
+						}
+					]
+				},
+				{
+					"name": "Get orders",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Payload has all properties\", () => {\r",
+									"    pm.expect(response.Items[0].user_sub).to.eql(\"orders\");\r",
+									"    pm.expect(response.Items[0].created_at).to.have.lengthOf(24);\r",
+									"    pm.expect(response.Items[0].deleted_at).to.have.lengthOf(24);\r",
+									"    pm.expect(response.Items[0].identifier.length).to.be.greaterThan(5);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{orders}}/catalogs/orders",
+							"host": [
+								"{{orders}}"
+							],
+							"path": [
+								"catalogs",
+								"orders"
+							]
+						},
+						"description": "Get all Orders"
+					},
+					"response": [
+						{
+							"name": "Get Orders",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{orders}}/catalogs/orders",
+									"host": [
+										"{{orders}}"
+									],
+									"path": [
+										"catalogs",
+										"orders"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 30 Jun 2022 20:44:17 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "201"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "x-amzn-RequestId",
+									"value": "bc999ee9-3516-4c1f-a970-8a71bedb03fb"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": ""
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type"
+								},
+								{
+									"key": "x-amz-apigw-id",
+									"value": "UjatUFDLIAMF7tg="
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "OPTIONS,POST,GET,PUT,DELETE,PATCH"
+								},
+								{
+									"key": "X-Amzn-Trace-Id",
+									"value": "Root=1-62be0b21-7460b4ea152ee1c22432195d;Sampled=0"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"Items\": [\n        {\n            \"isDelete\": true,\n            \"created_at\": \"2022-06-30T20:43:55.046Z\",\n            \"deleted_at\": \"2022-06-30T20:44:11.406Z\",\n            \"identifier\": \"14sjw25\",\n            \"category\": \"products\",\n            \"user_sub\": \"orders\"\n        }\n    ],\n    \"Count\": 1,\n    \"ScannedCount\": 1\n}"
+						}
+					]
+				}
+			]
+		}
+	]
+}
