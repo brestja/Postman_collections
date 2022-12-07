@@ -1,0 +1,1851 @@
+openapi: 3.0.0
+info:
+  version: '1.0.0'
+  title: 'Api NFT'
+  license:
+    name: MIT
+servers:
+  - url: 'localhost:3000'
+paths:
+  /nft:
+    post:
+      summary: 'Create nft'
+      operationId: createNft
+      tags:
+        - Nft
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                blockchain:
+                  description: Blockchain
+                  type: string
+                  example: "bsctest"
+                address:
+                  description: Address
+                  type: string
+                  example: "0xe0b1038f526e08b1115736306c02bcb70d08e59c"
+                kind:
+                  description: Kind
+                  type: string
+                  example: "event"
+                token_id:
+                  description: Token id
+                  type: string
+                  example: "7"
+                metadata:
+                  description: Metadata
+                  type: object
+                  example: {
+                    "name": "Event BNBChainES",
+                    "description": "Event of day 26th May in @BNBChainES",
+                    "attributes": {
+                       "location": "https://t.me/BNBChainES",
+                       "date_from": 1656266400000,
+                       "date_to": 1656280800000
+                     },
+                    "event": {
+                       "start_date_mint": 1656266400000,
+                       "end_date_mint": 1659139200000,
+                       "max_total_supply": 2500
+                     }
+                  }
+                claim_words:
+                  description: Claim words
+                  type: object
+                  example: "Hermandad del cangrejo"
+      responses:
+        '200':
+          description: 'Object containing identifier and token_uri information'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/New_nft'
+  /nft/{identifier}:
+    get:
+      summary: 'Get nft by id'
+      operationId: getNftById
+      description: "Returns nft by the given Id"
+      tags:
+        - Nft
+      parameters:
+        - name: identifier
+          in: path
+          description: Nft identifier
+          required: true
+          schema:
+            type: string
+            example: "75e359a6-94f3-4700-960c-945f1eb33a76"
+      responses:
+        '200':
+          description: 'Object containing nft information'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Nft_id'
+    put:
+      summary: 'Update nft'
+      operationId: updateNft
+      description: "Returns nft by the given Id"
+      tags:
+        - Nft
+      parameters:
+        - name: identifier
+          in: path
+          description: Nft identifier
+          required: true
+          schema:
+            type: string
+            example: 74a41557-7fa7-438e-a174-69a4808c2c86
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                token_id:
+                  description: Token id
+                  type: string
+                  example: "-1"
+      responses:
+        '200':
+          description: 'Status message'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Update_nft'
+    delete:
+      summary: 'Delete nft'
+      operationId: deleteNft
+      description: "Deletes nft"
+      tags:
+        - Nft
+      parameters:
+        - name: identifier
+          in: path
+          description: Nft identifier
+          required: true
+          schema:
+            type: string
+            example: 74a41557-7fa7-438e-a174-69a4808c2c86
+      responses:
+        '200':
+          description: 'Status message'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Delete_nft'
+  /nft/me:
+    get:
+      summary: 'Get nft me'
+      operationId: getNftMe
+      description: "returns the nft of the related account"
+      tags:
+        - Nft
+      responses:
+        '200':
+          description: 'Array containing nft information'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Nft_me'
+  /{blockchain}/nft/{address}/{token_id}:
+    get:
+      summary: 'Get nft blockchain'
+      operationId: getNftBlockchain
+      description: "Returns nft blockchain"
+      tags:
+        - Nft
+      parameters:
+        - name: blockchain
+          in: path
+          description: Network
+          required: true
+          schema:
+            type: string
+            example: "eth"
+        - name: address
+          in: path
+          description: Address
+          required: true
+          schema:
+            type: string
+            example: "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d"
+        - name: token_id
+          in: path
+          description: Token id
+          required: true
+          schema:
+            type: integer
+            format: int32
+            example: 2475
+      responses:
+        '200':
+          description: 'Object containing nft information'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Nft_blockchain'
+  /nft/{identifier}/info.json:
+    get:
+      summary: 'Get info json'
+      operationId: getInfoJson
+      description: "Returns nft info json by the given identifier"
+      tags:
+        - Nft
+      parameters:
+        - name: identifier
+          in: path
+          description: Nft identifier
+          required: true
+          schema:
+            type: string
+            example: "74a41557-7fa7-438e-a174-69a4808c2c86"
+      responses:
+        '200':
+          description: 'Object containing info json description'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Nft_infoJson'
+  /nft/search:
+    post:
+      summary: 'Search nft collection'
+      operationId: searchNftCollection
+      tags:
+        - Nft
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                query:
+                  description: Elastic search
+                  type: object
+                  example: {
+        "query": {
+            "bool": {
+                "must": [
+                    {
+                        "multi_match": {
+                            "query": "BNBChainES",
+                            "fields": [
+                                "metadata.description"
+                            ]
+                        }
+                    }
+                ],
+                "filter": [
+                    {
+                        "term": {
+                            "blockchain":"bsctest"
+                        }
+                    }
+                ]
+            }
+        }
+    }
+
+                from:
+                  type: integer
+                  format: int32
+                  example: 0
+                size:
+                   type: integer
+                   format: int32
+                   example: 16
+      responses:
+        '200':
+          description: 'Array containig collection information'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Nft_search'
+  /collection:
+    post:
+      summary: 'Create collection'
+      operationId: createCollection
+      tags:
+        - Collection
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                address:
+                  description: Address
+                  type: string
+                  example: "0xc0653f60859648e66b7c46ea8d0a8eb67988e718"
+                blockchain:
+                  description: Blockchain
+                  type: string
+                  example: "bsctest"
+                description:
+                  description: Information
+                  type: string
+                  example: "Default collection of events"
+                kind:
+                  description: kind
+                  type: string
+                  example: "Event"
+                name:
+                  description: Name
+                  type: string
+                  example: "Default event"
+                owner:
+                  description: Owner
+                  type: string
+                  example: "0x4a9e0fcdd826af2b235c69fc4e2ee03cdbb82632"
+      responses:
+        '200':
+          description: 'Status message'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/New_collection'
+  /collection/{identifier}:
+    get:
+      summary: 'Get collection by id'
+      operationId: getCollectionById
+      description: "Returns a collection by the given Id"
+      tags:
+        - Collection
+      parameters:
+        - name: identifier
+          in: path
+          description: Collection identifier
+          required: true
+          schema:
+            type: string
+            example: "bsctest~0xc0653f60859648e66b7c46ea8d0a8eb67988e718"
+      responses:
+        '200':
+          description: 'Object containing collection information'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Collection_id'
+    put:
+      summary: 'Update collection'
+      operationId: updateCollection
+      description: "Updates a collection by the given Id"
+      tags:
+        - Collection
+      parameters:
+        - name: identifier
+          in: path
+          description: Collection identifier
+          required: true
+          schema:
+            type: string
+            example: "bsctest~0xc0653f60859648e66b7c46ea8d0a8eb67988e718"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                address:
+                  description: Address
+                  type: string
+                  example: "0xc0653f60859648e66b7c46ea8d0a8eb67988e718"
+                blockchain:
+                  description: Blockchain
+                  type: string
+                  example: "bsctest"
+                description:
+                  description: Information
+                  type: string
+                  example: "Default collection of events"
+                kind:
+                  description: kind
+                  type: string
+                  example: "Event"
+                name:
+                  description: Name
+                  type: string
+                  example: "Default event"
+                owner:
+                  description: Owner
+                  type: string
+                  example: "0x4a9e0fcdd826af2b235c69fc4e2ee03cdbb82632"
+      responses:
+        '200':
+          description: 'Status message'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Update_collection'
+    delete:
+      summary: 'Deletes a  collection'
+      operationId: deleteCollection
+      description: "Deletes a collection by the given Id"
+      tags:
+        - Collection
+      parameters:
+        - name: identifier
+          in: path
+          description: Collection identifier
+          required: true
+          schema:
+            type: string
+            example: "bsctest~0xc0653f60859648e66b7c46ea8d0a8eb67988e718"
+      responses:
+        '200':
+          description: 'Status message'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Delete_collection'
+  /collection/me:
+    get:
+      summary: 'Get collection'
+      operationId: getCollectionMe
+      description: "Returns a collection by the given identifier"
+      tags:
+        - Collection
+      parameters:
+        - name: from
+          in: query
+          description: From
+          required: true
+          schema:
+            type: integer
+            format: int32
+            example: 0
+        - name: size
+          in: query
+          description: Size
+          required: true
+          schema:
+            type: integer
+            format: int32
+            example: 16
+      responses:
+        '200':
+          description: 'Array containing nft information'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Collection_me'
+  /collection/{identifier}/nfts/me:
+    get:
+      summary: 'Get nft me'
+      operationId: getCollectionNft
+      description: "Returns a collection by the given identifier"
+      tags:
+        - Collection
+      parameters:
+        - name: identifier
+          in: path
+          description: Identifier
+          required: true
+          schema:
+            type: string
+            example: "bsctest~0xc0653f60859648e66b7c46ea8d0a8eb67988e718"
+        - name: from
+          in: query
+          description: From
+          required: true
+          schema:
+            type: integer
+            format: int32
+            example: 0
+        - name: size
+          in: query
+          description: Size
+          required: true
+          schema:
+            type: integer
+            format: int32
+            example: 16
+      responses:
+        '200':
+          description: 'Array containing event information'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Collection_nft_me'
+  /collection/search:
+    post:
+      summary: 'Search collection'
+      operationId: searchCollection
+      tags:
+        - Collection
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                query:
+                  description: Elastic search
+                  type: object
+                  example: {
+        "query": {
+            "bool": {
+                "must": [
+                    {
+                        "multi_match": {
+                            "query": "BNB",
+                            "fields": [
+                                "address",
+                                "name",
+                                "description",
+                                "kind"
+                            ]
+                        }
+                    }
+                ],
+                "filter": [
+                    {
+                        "term": {
+                            "blockchain": "bsctest"
+                        }
+                    }
+                ]
+            }
+        }
+    }
+      responses:
+        '200':
+          description: 'Array containig collection information'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Collection_search'
+  /{blockchain}/request-nft/{address}/{token_id}/receiver/{receiver}:
+    get:
+      summary: 'Get receiver'
+      operationId: getReceiver
+      description: "Returns a collection by the given receiver"
+      tags:
+        - Request_nft
+      parameters:
+        - name: blockchain
+          in: path
+          description: Blockchain
+          required: true
+          schema:
+            type: string
+            example: "bsctest"
+        - name: address
+          in: path
+          description: Address
+          required: true
+          schema:
+            type: string
+            example: "0xe0b1038f526e08b1115736306c02bcb70d08e59c"
+        - name: token_id
+          in: path
+          description: Token Id
+          required: true
+          schema:
+            type: integer
+            format: int32
+            example: 1
+        - name: receiver
+          in: path
+          description: Receiver
+          required: true
+          schema:
+            type: string
+            example: "0x4a9e0fcdd826af2b235c69fc4e2ee03cdbb82632"
+      responses:
+        '200':
+          description: 'Object containing receiver information'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Receiver'
+  /{blockchain}/request-nft/{address}/{token_id}/{kind_claim}:
+    post:
+      summary: 'Kind Claim'
+      operationId: getRe
+      description: "Retur"
+      tags:
+        - Request_nft
+      parameters:
+        - name: blockchain
+          in: path
+          description: Blockchain
+          required: true
+          schema:
+            type: string
+            example: "bsctest"
+        - name: address
+          in: path
+          description: Address
+          required: true
+          schema:
+            type: string
+            example: "0xe0b1038f526e08b1115736306c02bcb70d08e59c"
+        - name: token_id
+          in: path
+          description: Token Id
+          required: true
+          schema:
+            type: integer
+            format: int32
+            example: 1
+        - name: kind_claim
+          in: path
+          description: kind_claim
+          required: true
+          schema:
+            type: string
+            example: "claim-words"
+      responses:
+        '200':
+          description: 'Object containing nft information'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Kind_claim'
+  /bsc/address/{address}:
+    get:
+      summary: 'Get Nft by address'
+      operationId: getNftByAddress
+      description: "Get Nft by the given address"
+      tags:
+        - Address Nft
+      parameters:
+        - name: address
+          in: path
+          description: Address
+          required: true
+          schema:
+            type: string
+            example: "0xc1f4fd1196953f0a70b2f368129c8a45fc88ae32"
+        - name: size
+          in: query
+          description: Size
+          required: true
+          schema:
+            type: integer
+            format: int32
+            example: 16
+        - name: page
+          in: query
+          description: Size
+          required: true
+          schema:
+            type: integer
+            format: int32
+            example: 1
+      responses:
+        '200':
+          description: 'Object containing Nft details'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/address_nft'
+  /v2/bsc/address/{address}:
+    get:
+      summary: 'Get Nft by address V2'
+      operationId: getNftByAddressV2
+      description: "Get Nft by the given address (v2)"
+      tags:
+        - Address Nft
+      parameters:
+        - name: address
+          in: path
+          description: Address
+          required: true
+          schema:
+            type: string
+            example: "0xc1f4fd1196953f0a70b2f368129c8a45fc88ae32"
+        - name: size
+          in: query
+          description: Size
+          required: true
+          schema:
+            type: integer
+            format: int32
+            example: 16
+        - name: page
+          in: query
+          description: Size
+          required: true
+          schema:
+            type: integer
+            format: int32
+            example: 1
+      responses:
+        '200':
+          description: 'Object containing Nft details'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/address_nft_v2'
+  /marketplace/ad/{id}:
+    get:
+      summary: 'Get NFT by user id'
+      operationId: get
+      description: "Get NFT"
+      tags:
+        - Address Nft
+      parameters:
+        - name: id
+          in: path
+          description: Id
+          required: true
+          schema:
+            type: string
+            example: "876a7b76-d56f-4866-ad2a-0a32d66eee29"
+      responses:
+        '200':
+          description: 'Array containing NFT list'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ad_identifier'
+  /marketplace/ad:
+    post:
+      summary: 'Creates NFT'
+      operationId: postNft
+      description: "Creates an NFT"
+      tags:
+        - Address Nft  
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                "user_sub":
+                  type: string
+                  example: "c998144d-f4a5-409c-bd12-ca93691d03e9"
+                "signature":
+                  type: object
+                  example: {
+                    "value": "0xabf3e680174d5994fbc92b203e7bcc6c82c049f523e6a359dd57564dc3f58ff3",
+                    "v": "0x1c",
+                    "r": "0x0ffe8ad71466b9bdb33aa93bcab50d0622654a9ec09dcf47a17e67145fa7c86f",
+                    "s": "0x239bdb51d9a24ba7a690ebd29116087ec2b60fefdece06fce1fabf190d7935fa"
+                }
+                "base_token_name":
+                  type: string
+                  example: "paisaje_supply_10"
+                "base_token_address":
+                  type: string
+                  example: "0x9881481df34974c2cb17157ae3c3cd209831707f"
+                "base_token_id":
+                  type: string
+                  example: "115540776186829682179538218970689677199930016646310594916348377604677096332212"
+                "base_token_quantity":
+                  type: integer
+                  format: int32
+                  example: 1
+                "quote_token_name":
+                  type: string
+                  example: "BNB"
+                "quote_token_symbol":
+                  type: string
+                  example: "BNB"
+                "quote_token_address":
+                  type: string
+                  example: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+                "quote_token_quantity":
+                  type: integer
+                  format: int32
+                  example: 1
+                "close_date":
+                  type: integer
+                  format: int32
+                  example: 1
+                "blockchain_name":
+                  type: string
+                  example: "bsctest"
+                "blockchain_id":
+                  type: integer
+                  format: int32
+                  example: 97
+                "terms":
+                  type: string
+                  example: "terms"
+                "seller_wallet":
+                  type: string
+                  example: "0x5b4233f2ad4a36dc7eb0e64abe7d092ef6326279"
+      responses:
+        '200':
+          description: 'Object containing NFT identifier'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/create_nft'
+  /marketplace/ad/search:
+    post:
+      summary: 'Get all NFT'
+      operationId: get
+      description: "Get all NFT"
+      tags:
+        - Address Nft
+      responses:
+        '200':
+          description: 'Array containing all NFT'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ad_search'
+  /marketplace/ad/{identifier}/buy:
+    get:
+      summary: 'Buy Marketplace NFT'
+      operationId: buyNft
+      description: "Buy NFT"
+      tags:
+        - Address Nft
+      parameters:
+        - name: identifier
+          in: path
+          description: identifier
+          required: true
+          schema:
+            type: string
+            example: "55dd332c-a297-4f6b-b251-72c88d8649ee"
+      responses:
+        '200':
+          description: 'Object containing '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/a'
+components:
+  schemas:
+    New_nft:
+      type: object
+      properties:
+        status:
+          type: integer
+          format: int64
+          example: 200
+        description:
+          type: string
+          example: "Successful request"
+        payload:
+          type: object
+          example: {
+        "identifier": "3adcd206-ebbd-42d3-981b-b14a97b1bfc0",
+        "token_uri": "https://nft.api.dev.euler.tools/nft/3adcd206-ebbd-42d3-981b-b14a97b1bfc0/info.json"
+    }
+    Nft_id:
+      type: object
+      properties:
+        metadata: 
+          type: object
+          example: {
+        "name": "Event BNBChainES",
+        "description": "Event of day 26th May in @BNBChainES",
+        "attributes": {
+            "location": "https://t.me/BNBChainES",
+            "date_from": 1656266400000,
+            "date_to": 1656280800000
+        },
+        "event": {
+            "start_date_mint": 1656266400000,
+            "max_total_supply": 2500,
+            "end_date_mint": 1659139200000
+        }
+    }
+    blockchain: 
+      type: string
+      example: "bsctest"
+    collection: 
+      type: string
+      example: "bsctest~0xe0b1038f526e08b1115736306c02bcb70d08e59c"
+    kind: 
+      type: string
+      example: "event"
+    identifier: 
+      type: string
+      example: "75e359a6-94f3-4700-960c-945f1eb33a76"
+    token_uri: 
+      type: string
+      example: "https://nft.api.dev.euler.tools/nft/75e359a6-94f3-4700-960c-945f1eb33a76/info.json"
+    claim_words: 
+      type: string
+      example: "Hermandad del cangrejo"
+    user_sub: 
+      type: string
+      example: "bc7b9f74-5735-4818-aca9-fb50054679cf"
+    address: 
+      type: string
+      example: "0xe0b1038f526e08b1115736306c02bcb70d08e59c"
+    token_id: 
+      type: string
+      example: "4"
+    Update_nft:
+      type: object
+      properties:
+        status: 
+          type: integer
+          format: int32
+          example: 200
+        description: 
+          type: string
+          example: "Successful request"
+    Delete_nft:
+      type: object
+      properties:
+        status: 
+          type: integer
+          format: int32
+          example: 200
+        description: 
+          type: string
+          example: "Successful request"
+    Nft_me:
+      type: object
+      properties: 
+        total: 
+          type: integer
+          format: int32
+          example: 1
+        results:
+          type: array
+          items:
+            type: object
+            example: [
+        {
+            "identifier": "1dd70929-3084-4ab0-99fa-e7edc8095e92",
+            "metadata": {
+                "name": "Event BNBChainES",
+                "description": "Event of day 26th May in @BNBChainES",
+                "attributes": {
+                    "location": "https://t.me/BNBChainES",
+                    "date_to": 1656280800000,
+                    "date_from": 1656266400000
+                },
+                "event": {
+                    "max_total_supply": 2500,
+                    "end_date_mint": 1659139200000,
+                    "start_date_mint": 1656266400000
+                }
+            },
+            "token_uri": "https://nft.api.dev.euler.tools/nft/1dd70929-3084-4ab0-99fa-e7edc8095e92/info.json",
+            "address": "0xe0b1038f526e08b1115736306c02bcb70d08e59c",
+            "token_id": "21",
+            "blockchain": "bsctest",
+            "kind": "event",
+            "collection": "bsctest~0xe0b1038f526e08b1115736306c02bcb70d08e59c",
+            "claim_words": "Hermandad del cangrejo"
+        }
+    ]
+    Nft_blockchain: 
+      type: object
+      properties:
+        blockchain: 
+          type: string
+          example: "eth"
+        address: 
+          type: string
+          example: "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d"
+        token_id: 
+           type: string
+           example: "2475"
+        kind: 
+          type: string
+          example: "other"
+        token_uri: 
+          type: string
+          example: "https://ipfs.io/ipfs/QmeSjSinHpPnmXmspMjwiXyN6zS4E9zccariGR3jxcaWtq/2475"
+        metadata:
+          type: object
+          example: {
+        "image": "https://ipfs.io/ipfs/QmV7JEWPVgETvLP8TF9i88UX1y3MzuHwq1nDjzBZmNoruj",
+        "attributes": [
+            {
+                "trait_type": "Eyes",
+                "value": "Eyepatch"
+            },
+            {
+                "trait_type": "Clothes",
+                "value": "Caveman Pelt"
+            },
+            {
+                "trait_type": "Fur",
+                "value": "Black"
+            },
+            {
+                "trait_type": "Mouth",
+                "value": "Bored"
+            },
+            {
+                "trait_type": "Background",
+                "value": "Army Green"
+            },
+            {
+                "trait_type": "Hat",
+                "value": "Fez"
+            }
+        ]
+    }
+    Nft_infoJson:
+      type: object
+      properties:
+        name: 
+          type: string
+          example: "Event BNBChainES"
+        description: 
+          type: string
+          example: "Event of day 26th May in @BNBChainES"
+        attributes:
+          type: array
+          items:
+            type: object
+            example: [
+        {
+            "name": "location",
+            "value": "https://t.me/BNBChainES",
+            "trait_type": "Location"
+        },
+        {
+            "name": "date_from",
+            "display_type": "date",
+            "value": "1546360800",
+            "trait_type": "Date From"
+        },
+        {
+            "name": "date_to",
+            "display_type": "date",
+            "value": "1546360800",
+            "trait_type": "Date To"
+        },
+        {
+            "name": "virtual_event",
+            "display_type": "boolean",
+            "value": "true",
+            "trait_type": "Virtual event"
+        },
+        {
+            "name": "website",
+            "display_type": "url",
+            "value": "https://t.me/BNBChainES",
+            "trait_type": "Website"
+        }
+    ]
+        event: 
+          type: object
+          example: {
+          "start_date_mint": 1656266400,
+          "max_total_supply": 2500,
+          "end_date_mint": 1659139200
+      }
+    New_collection:
+      type: object
+      properties:
+        status: 
+          type: integer
+          format: int32
+          example: 200
+        description: 
+          type: string
+          example: "Successful request"
+        payload: 
+          type: object
+          example: {
+        "identifier": "bsctest~0xc0653f60859648e66b7c46ea8d0a8eb67988e718"
+    }
+    Update_collection: 
+      type: object
+      properties:
+        status: 
+          type: integer
+          format: int32
+          example: 200
+        description: 
+          type: string
+          example: "Successful request"
+    Delete_collection: 
+      type: object
+      properties:
+        status: 
+          type: integer
+          format: int32
+          example: 200
+        description: 
+          type: string
+          example: "Successful request"
+    Collection_me:
+      type: object
+      properties: 
+          total: 
+            type: integer
+            format: int32
+            example: 2
+          results: 
+            type: array
+            items:
+              type: object
+              example: [
+        {
+            "owner": "0x4a9e0fcdd826af2b235c69fc4e2ee03cdbb82632",
+            "identifier": "bsctest~0xc0653f60859648e66b7c46ea8d0a8eb67988e716",
+            "address": "0xc0653f60859648e66b7c46ea8d0a8eb67988e716",
+            "blockchain": "bsctest",
+            "kind": "event",
+            "name": "Default Events",
+            "description": "Default collection of events"
+        },
+        {
+            "owner": "0x4a9e0fcdd826af2b235c69fc4e2ee03cdbb82632",
+            "identifier": "bsctest~0x88590434f129f246a94c19fc6af61115e6091bf4",
+            "image": "https://nft.assets.dev.euler.tools/collection/bsctest~0x88590434f129f246a94c19fc6af61115e6091bf4/image.png",
+            "address": "0x88590434f129f246a94c19fc6af61115e6091bf4",
+            "blockchain": "bsctest",
+            "kind": "event",
+            "name": "BNB Testnet Event",
+            "banner": "https://nft.assets.dev.euler.tools/collection/bsctest~0x88590434f129f246a94c19fc6af61115e6091bf4/banner.png",
+            "description": "Default collection of events"
+        }
+    ]
+    Receiver:
+      type: object
+      properties:
+        signature: 
+          type: object
+          example: {
+        "r": "0xf32c2c69491e20d43b853ce277cc8b5616dc465f2cf508ebe8c8725b6f81ee75",
+        "s": "0x73f39094c8c1849d0a0b879285176da4499cb90e288028201cd66fabadb3a30e",
+        "value": "0x16a36b715c6dc6bc3cdd64e56a8ce00457897863a6b855f2b84bde2d6968f2aa",
+        "signature": "0xf32c2c69491e20d43b853ce277cc8b5616dc465f2cf508ebe8c8725b6f81ee7573f39094c8c1849d0a0b879285176da4499cb90e288028201cd66fabadb3a30e1c",
+        "v": "0x1c"
+    }
+        position: 
+          type: string
+          example: "0"
+        data: 
+          type: object
+          example: {
+        "tokenId": "1",
+        "receivers": [
+            "0x4a9e0fcdd826af2b235c69fc4e2ee03cdbb82632"
+        ]
+    }
+    Kind_claim:
+      type: object
+      properties:
+        status: 
+          type: integer
+          format: int32
+          example: 200
+        description: 
+          type: string
+          example: "Successful request"
+        payload: 
+          type: object
+          example: {
+        "data": {
+            "tokenId": "1",
+            "receivers": [
+                "0x4a9e0fcdd826af2b235c69fc4e2ee03cdbb82632"
+            ]
+        },
+        "signature": {
+            "value": "0x16a36b715c6dc6bc3cdd64e56a8ce00457897863a6b855f2b84bde2d6968f2aa",
+            "signature": "0xf32c2c69491e20d43b853ce277cc8b5616dc465f2cf508ebe8c8725b6f81ee7573f39094c8c1849d0a0b879285176da4499cb90e288028201cd66fabadb3a30e1c",
+            "v": "0x1c",
+            "r": "0xf32c2c69491e20d43b853ce277cc8b5616dc465f2cf508ebe8c8725b6f81ee75",
+            "s": "0x73f39094c8c1849d0a0b879285176da4499cb90e288028201cd66fabadb3a30e"
+        },
+        "position": "0"
+    }
+    Collection_id:
+      type: object
+      properties:
+        blockchain:
+          type: string
+          example: "bsctest"
+        kind:
+          type: string
+          example: "event"
+        identifier:
+          type: string
+          example: "bsctest~0xc0653f60859648e66b7c46ea8d0a8eb67988e718"
+        owner:
+          type: string
+          example: "0x4a9e0fcdd826af2b235c69fc4e2ee03cdbb82632"
+        user_sub:
+          type: string
+          example: "bc7b9f74-5735-4818-aca9-fb50054679cf"
+        address:
+          type: string
+          example: "0xc0653f60859648e66b7c46ea8d0a8eb67988e718"
+        description:
+          type: string
+          example: "Default collection of events"
+        name:
+          type: string
+          example: "Default Events"
+    Collection_nft_me:
+      type: object
+      properties:
+        total:
+          type: integer
+          format: int32
+          example: 1
+        results:
+          type: array
+          items:
+            type: object 
+            example: [
+        {
+            "identifier": "1dd70929-3084-4ab0-99fa-e7edc8095e92",
+            "metadata": {
+                "name": "Event BNBChainES",
+                "description": "Event of day 26th May in @BNBChainES",
+                "attributes": {
+                    "location": "https://t.me/BNBChainES",
+                    "date_to": 1656280800000,
+                    "date_from": 1656266400000
+                },
+                "event": {
+                    "max_total_supply": 2500,
+                    "end_date_mint": 1659139200000,
+                    "start_date_mint": 1656266400000
+                }
+            },
+            "token_uri": "https://nft.api.dev.euler.tools/nft/1dd70929-3084-4ab0-99fa-e7edc8095e92/info.json",
+            "address": "0xe0b1038f526e08b1115736306c02bcb70d08e59c",
+            "token_id": "21",
+            "blockchain": "bsctest",
+            "kind": "event",
+            "collection": "bsctest~0xe0b1038f526e08b1115736306c02bcb70d08e59c",
+            "claim_words": "Hermandad del cangrejo"
+        }
+    ]
+    Collection_search:
+      type: object
+      properties:
+        total:
+          type: integer
+          format: int32
+          example: 1
+        results:
+          type: array
+          items:
+            type: object 
+            example: [
+        {
+            "address": "0x88590434f129f246a94c19fc6af61115e6091bf4",
+            "blockchain": "bsctest",
+            "kind": "event",
+            "name": "BNB Testnet Event",
+            "description": "Default collection of events"
+        }
+    ]
+    Nft_search_:
+      type: object
+      properties:
+        total:
+          type: integer
+          format: int32
+          example: 2
+        results:
+          type: array
+          items:
+            type: object 
+            example: [
+        {
+            "metadata": {
+                "image": "https://nft.assets.dev.euler.tools/nft/c08f7a84-1286-4f8d-86bc-78a15beaa7af/image.png",
+                "name": "Event BNBChainES",
+                "description": "Event of day 26th May in @BNBChainES",
+                "attributes": {
+                    "location": "https://t.me/BNBChainES",
+                    "date_to": 1656280800000,
+                    "date_from": 1656266400000
+                },
+                "event": {
+                    "max_total_supply": 2500,
+                    "end_date_mint": 1659139200000,
+                    "start_date_mint": 1656266400000
+                }
+            },
+            "token_uri": "https://nft.api.dev.euler.tools/nft/c08f7a84-1286-4f8d-86bc-78a15beaa7af/info.json",
+            "address": "0x88590434f129f246a94c19fc6af61115e6091bf4",
+            "blockchain": "bsctest",
+            "kind": "event"
+        },
+        {
+            "metadata": {
+                "name": "Event BNBChainES",
+                "description": "Event of day 26th May in @BNBChainES",
+                "attributes": {
+                    "location": "https://t.me/BNBChainES",
+                    "date_to": 1656280800000,
+                    "date_from": 1656266400000
+                },
+                "event": {
+                    "max_total_supply": 2500,
+                    "end_date_mint": 1659139200000,
+                    "start_date_mint": 1656266400000
+                }
+            },
+            "token_uri": "https://nft.api.dev.euler.tools/nft/1dd70929-3084-4ab0-99fa-e7edc8095e92/info.json",
+            "address": "0xe0b1038f526e08b1115736306c02bcb70d08e59c",
+            "token_id": "21",
+            "blockchain": "bsctest",
+            "kind": "event"
+        }
+    ]
+    address_nft:
+      type: object
+      properties:
+        "total":
+          type: integer
+          format: int32
+          example: 7
+        "page":
+          type: integer
+          format: int32
+          example: 1
+        "limit":
+          type: integer
+          format: int32
+          example: 16
+        "cursor":
+          type: integer
+          nullable: true
+        "result":
+          type: array
+          items:
+            type: object
+            example: [
+        {
+            "token_address": "0xfa9b79769adc9bc9684d770586ed0a3a1074139d",
+            "token_id": "6",
+            "amount": "1",
+            "owner_of": "0xc1f4fd1196953f0a70b2f368129c8a45fc88ae32",
+            "token_hash": "b107087cdd8bb8d6c1bd399b5645245b",
+            "block_number_minted": "21706808",
+            "block_number": "21728048",
+            "contract_type": "ERC1155",
+            "name": "Euler Tools Guestbook",
+            "symbol": "EULERBOOK",
+            "token_uri": "https://nft.api.prod.euler.tools/nft/50d3ec51-c5bb-4e76-b4c7-3de09e26df4a/info.json",
+            "metadata": {
+                "name": "AWS Iberia Fintech Day 2022",
+                "description": "Evento de AWS en Madrid el día Miércoles 28 de Septiembre",
+                "image": "https://nft.assets.prod.euler.tools/nft/50d3ec51-c5bb-4e76-b4c7-3de09e26df4a/image.jpeg",
+                "attributes": [
+                    {
+                        "name": "location",
+                        "value": "Madrid",
+                        "trait_type": "Location"
+                    },
+                    {
+                        "name": "date_from",
+                        "display_type": "date",
+                        "value": "Sun, 27 Sep 2020 22:00:00 GMT",
+                        "trait_type": "Date From"
+                    },
+                    {
+                        "name": "date_to",
+                        "display_type": "date",
+                        "value": "Sun, 27 Sep 2020 22:00:00 GMT",
+                        "trait_type": "Date To"
+                    }
+                ],
+                "setting": {
+                    "start_date_mint": "Tue, 27 Sep 2022 20:56:00 GMT",
+                    "max_total_supply": "1000",
+                    "end_date_mint": "Thu, 27 Oct 2022 20:57:00 GMT"
+                }
+            },
+            "last_token_uri_sync": "2022-09-27T21:02:19.056Z",
+            "last_metadata_sync": "2022-09-27T21:02:22.858Z",
+            "minter_address": "0x4884a0409f5f3748a3dfd3fd662199cdc6b01b2b"
+        },
+        {
+            "token_address": "0xfa9b79769adc9bc9684d770586ed0a3a1074139d",
+            "token_id": "5",
+            "amount": "1",
+            "owner_of": "0xc1f4fd1196953f0a70b2f368129c8a45fc88ae32",
+            "token_hash": "a28d7e5a46a0eafbac8fbcb22b5f1ed2",
+            "block_number_minted": "21134297",
+            "block_number": "21176158",
+            "contract_type": "ERC1155",
+            "name": "Euler Tools Guestbook",
+            "symbol": "EULERBOOK",
+            "token_uri": "https://nft.api.prod.euler.tools/nft/c1bcadc7-3c5b-497a-82a2-a605ccda2a4d/info.json",
+            "metadata": {
+                "name": "Partnership with SuperReal",
+                "description": "Partnership with SuperReal to tokenize the metaverse",
+                "image": "https://nft.assets.prod.euler.tools/nft/c1bcadc7-3c5b-497a-82a2-a605ccda2a4d/image.png",
+                "attributes": [
+                    {
+                        "name": "location",
+                        "value": "https://euler.tools/",
+                        "trait_type": "Location"
+                    },
+                    {
+                        "display_type": "date",
+                        "name": "date_from",
+                        "value": "Tue, 06 Sep 2022 22:00:00 GMT",
+                        "trait_type": "Date From"
+                    },
+                    {
+                        "display_type": "date",
+                        "name": "date_to",
+                        "value": "Tue, 06 Sep 2022 22:00:00 GMT",
+                        "trait_type": "Date To"
+                    }
+                ],
+                "setting": {
+                    "start_date_mint": "Tue, 06 Sep 2022 22:00:00 GMT",
+                    "max_total_supply": "2000",
+                    "end_date_mint": null
+                }
+            },
+            "last_token_uri_sync": "2022-09-07T21:02:37.314Z",
+            "last_metadata_sync": "2022-09-07T21:02:49.257Z",
+            "minter_address": "0xfe3804e0fe9ffc75a8c5207f8a876102f1df8d58"
+        },
+        {
+            "token_address": "0xfa9b79769adc9bc9684d770586ed0a3a1074139d",
+            "token_id": "4",
+            "amount": "1",
+            "owner_of": "0xc1f4fd1196953f0a70b2f368129c8a45fc88ae32",
+            "token_hash": "5f72f8fca922dc9ce6a72b61665a889b",
+            "block_number_minted": "20782698",
+            "block_number": "20785259",
+            "contract_type": "ERC1155",
+            "name": "Euler Tools Guestbook",
+            "symbol": "EULERBOOK",
+            "token_uri": "https://nft.api.prod.euler.tools/nft/2eaf73ef-9353-4254-ad99-e50dc26e02a7/info.json",
+            "metadata": {
+                "name": "NFT Marketplace Pre-Launch",
+                "description": "NFT to represent the pre-launch of our NFT marketplace",
+                "image": "https://nft.assets.prod.euler.tools/nft/2eaf73ef-9353-4254-ad99-e50dc26e02a7/image.png",
+                "attributes": [
+                    {
+                        "name": "location",
+                        "value": "https://euler.tools/",
+                        "trait_type": "Location"
+                    },
+                    {
+                        "name": "date_from",
+                        "display_type": "date",
+                        "value": "Wed, 31 Aug 2022 22:00:00 GMT",
+                        "trait_type": "Date From"
+                    },
+                    {
+                        "name": "date_to",
+                        "display_type": "date",
+                        "value": "Thu, 29 Sep 2022 22:00:00 GMT",
+                        "trait_type": "Date To"
+                    }
+                ],
+                "setting": {
+                    "start_date_mint": "Wed, 31 Aug 2022 22:00:00 GMT",
+                    "max_total_supply": "3000",
+                    "end_date_mint": "Thu, 29 Sep 2022 22:00:00 GMT"
+                }
+            },
+            "last_token_uri_sync": "2022-08-26T15:27:13.403Z",
+            "last_metadata_sync": "2022-08-26T15:27:25.469Z",
+            "minter_address": "0x4c21080cdffc33e54b98ea782c4437f8c50d299c"
+        },
+        {
+            "token_address": "0xda991621d4f8bcd67c9c8a12cd7d108f7c4df366",
+            "token_id": "879",
+            "amount": "1",
+            "owner_of": "0xc1f4fd1196953f0a70b2f368129c8a45fc88ae32",
+            "token_hash": "e731abcc27d44879faf26c76ea217eec",
+            "block_number_minted": "12750998",
+            "block_number": "12750998",
+            "contract_type": "ERC1155",
+            "name": "Paulie",
+            "symbol": null,
+            "token_uri": "https://graphigo.prd.galaxy.eco/metadata/0xdA991621d4F8bcD67c9C8a12Cd7D108f7c4dF366/879.json",
+            "metadata": {
+                "name": "Paulie",
+                "description": "If you're a member of the Polkastarter community you've been along for the wild ride of IDOs, and watched many projects launch and thrive.\n\nNow the journey of Polkastarter continues with our new limited-edition NFT series, “POLS Diamond Hands 2021”! In order to reward the POLS holders who grasped their crystal white-knuckles onto those POLS tokens throughout the (in)famous May 2021 market crash, we are releasing a limited edition NFT. Soooo, meet Paulie! \n\nTogether with digital artist Jaime Sobreviela (aka Mr. Kat), we are launching a Diamond Mystery Box today. In it you will find one of two Paulie NFTs that we really like — and we hope you do too!\n\nStay tuned for more Polkastarter art, action and future NFT utility, and we’re sure that this piece of crypto history “POLS Diamond Hands 2021” will definitely be a collectors’ item!",
+                "image": "https://dashboard.mypinata.cloud/ipfs/QmaoxxQYT8szSah4ixc7MAbCyQt17uSvetFye4CBKt9yHz",
+                "animation_url": "https://d257b89266utxb.cloudfront.net/galaxy/images/polkastarter/1636614881716646193.mp4",
+                "background_color": "",
+                "external_link": "https://galaxy.eco/nft/879/0xdA991621d4F8bcD67c9C8a12Cd7D108f7c4dF366",
+                "owner": "0xC1F4fD1196953f0A70b2F368129C8a45fC88aE32",
+                "attributes": [
+                    {
+                        "trait_type": "category",
+                        "value": "Paulie"
+                    },
+                    {
+                        "display_type": "date",
+                        "trait_type": "birthday",
+                        "value": 1637239245
+                    }
+                ]
+            },
+            "last_token_uri_sync": null,
+            "last_metadata_sync": null,
+            "minter_address": null
+        },
+        {
+            "token_address": "0x6d575f0314516367c9bd650f4f81ec127fbae79d",
+            "token_id": "22784",
+            "amount": "1",
+            "owner_of": "0xc1f4fd1196953f0a70b2f368129c8a45fc88ae32",
+            "token_hash": "31645f9afe42001dc1d91ca540e3b3ed",
+            "block_number_minted": "16506558",
+            "block_number": "16506558",
+            "contract_type": "ERC721",
+            "name": "BadgeToken",
+            "symbol": "KBT",
+            "token_uri": "https://ipfs.moralis.io:2053/ipfs/QmXure1yHRjERnPqaZxW854B4MV7ELdUarNVidDkg2xguJ/22784",
+            "metadata": {
+                "image": "https://ipfs.io/ipfs/QmbJzq7AXM9yzqA9XMGYjbbqXKXsFNqtEVxBwLocZ51pBa",
+                "name": "Badge #22784",
+                "description": "The Kyoko badge is the first key you'll encounter after entering Kyoko's metaverse. Mint our badge and Join Kyoko's Discord. We're waiting for you!"
+            },
+            "last_token_uri_sync": "2022-07-11T14:04:21.422Z",
+            "last_metadata_sync": "2022-07-11T14:04:56.671Z",
+            "minter_address": "0xa01a04b7ad11aa640403c12fc2e2fcb7a0db5713"
+        },
+        {
+            "token_address": "0x6d575f0314516367c9bd650f4f81ec127fbae79d",
+            "token_id": "22783",
+            "amount": "1",
+            "owner_of": "0xc1f4fd1196953f0a70b2f368129c8a45fc88ae32",
+            "token_hash": "826c4a3f1ee3a902f168bb8fccd554ec",
+            "block_number_minted": "16506551",
+            "block_number": "16506551",
+            "contract_type": "ERC721",
+            "name": "BadgeToken",
+            "symbol": "KBT",
+            "token_uri": "https://ipfs.moralis.io:2053/ipfs/QmXure1yHRjERnPqaZxW854B4MV7ELdUarNVidDkg2xguJ/22783",
+            "metadata": {
+                "image": "https://ipfs.io/ipfs/QmbJzq7AXM9yzqA9XMGYjbbqXKXsFNqtEVxBwLocZ51pBa",
+                "name": "Badge #22783",
+                "description": "The Kyoko badge is the first key you'll encounter after entering Kyoko's metaverse. Mint our badge and Join Kyoko's Discord. We're waiting for you!"
+            },
+            "last_token_uri_sync": "2022-07-11T16:46:38.166Z",
+            "last_metadata_sync": "2022-07-11T16:47:02.925Z",
+            "minter_address": "0x4ce839f279bd9588f6b8b7001f04ad72c2a12555"
+        },
+        {
+            "token_address": "0x6d575f0314516367c9bd650f4f81ec127fbae79d",
+            "token_id": "22782",
+            "amount": "1",
+            "owner_of": "0xc1f4fd1196953f0a70b2f368129c8a45fc88ae32",
+            "token_hash": "0a6a2fb62119d5003109a4971668007b",
+            "block_number_minted": "16506542",
+            "block_number": "16506542",
+            "contract_type": "ERC721",
+            "name": "BadgeToken",
+            "symbol": "KBT",
+            "token_uri": "https://ipfs.moralis.io:2053/ipfs/QmXure1yHRjERnPqaZxW854B4MV7ELdUarNVidDkg2xguJ/22782",
+            "metadata": {
+                "image": "https://ipfs.io/ipfs/QmbJzq7AXM9yzqA9XMGYjbbqXKXsFNqtEVxBwLocZ51pBa",
+                "name": "Badge #22782",
+                "description": "The Kyoko badge is the first key you'll encounter after entering Kyoko's metaverse. Mint our badge and Join Kyoko's Discord. We're waiting for you!"
+            },
+            "last_token_uri_sync": "2022-07-11T14:06:43.936Z",
+            "last_metadata_sync": "2022-07-11T14:07:02.489Z",
+            "minter_address": "0xc1f4fd1196953f0a70b2f368129c8a45fc88ae32"
+        }
+    ]
+    address_nft_v2:
+      type: object
+      properties:
+        "total":
+          type: integer
+          format: int32
+          example: 7
+        "result":
+          type: array
+          items:
+            type: object
+            example: [
+        {
+            "token_address": "0xfa9b79769adc9bc9684d770586ed0a3a1074139d",
+            "token_id": "6",
+            "amount": "1",
+            "owner_of": "0xc1f4fd1196953f0a70b2f368129c8a45fc88ae32",
+            "token_hash": "b107087cdd8bb8d6c1bd399b5645245b",
+            "block_number_minted": "21706808",
+            "block_number": "21728048",
+            "contract_type": "ERC1155",
+            "name": "Euler Tools Guestbook",
+            "symbol": "EULERBOOK",
+            "token_uri": "https://nft.api.prod.euler.tools/nft/50d3ec51-c5bb-4e76-b4c7-3de09e26df4a/info.json",
+            "metadata": {
+                "name": "AWS Iberia Fintech Day 2022",
+                "description": "Evento de AWS en Madrid el día Miércoles 28 de Septiembre",
+                "image": "https://nft.assets.prod.euler.tools/nft/50d3ec51-c5bb-4e76-b4c7-3de09e26df4a/image.jpeg",
+                "attributes": [
+                    {
+                        "name": "location",
+                        "value": "Madrid",
+                        "trait_type": "Location"
+                    },
+                    {
+                        "name": "date_from",
+                        "display_type": "date",
+                        "value": "Sun, 27 Sep 2020 22:00:00 GMT",
+                        "trait_type": "Date From"
+                    },
+                    {
+                        "name": "date_to",
+                        "display_type": "date",
+                        "value": "Sun, 27 Sep 2020 22:00:00 GMT",
+                        "trait_type": "Date To"
+                    }
+                ],
+                "setting": {
+                    "start_date_mint": "Tue, 27 Sep 2022 20:56:00 GMT",
+                    "max_total_supply": "1000",
+                    "end_date_mint": "Thu, 27 Oct 2022 20:57:00 GMT"
+                }
+            },
+            "last_token_uri_sync": "2022-09-27T21:02:19.056Z",
+            "last_metadata_sync": "2022-09-27T21:02:22.858Z"
+        },
+        {
+            "token_address": "0xfa9b79769adc9bc9684d770586ed0a3a1074139d",
+            "token_id": "5",
+            "amount": "1",
+            "owner_of": "0xc1f4fd1196953f0a70b2f368129c8a45fc88ae32",
+            "token_hash": "a28d7e5a46a0eafbac8fbcb22b5f1ed2",
+            "block_number_minted": "21134297",
+            "block_number": "21176158",
+            "contract_type": "ERC1155",
+            "name": "Euler Tools Guestbook",
+            "symbol": "EULERBOOK",
+            "token_uri": "https://nft.api.prod.euler.tools/nft/c1bcadc7-3c5b-497a-82a2-a605ccda2a4d/info.json",
+            "metadata": {
+                "name": "Partnership with SuperReal",
+                "description": "Partnership with SuperReal to tokenize the metaverse",
+                "image": "https://nft.assets.prod.euler.tools/nft/c1bcadc7-3c5b-497a-82a2-a605ccda2a4d/image.png",
+                "attributes": [
+                    {
+                        "name": "location",
+                        "value": "https://euler.tools/",
+                        "trait_type": "Location"
+                    },
+                    {
+                        "display_type": "date",
+                        "name": "date_from",
+                        "value": "Tue, 06 Sep 2022 22:00:00 GMT",
+                        "trait_type": "Date From"
+                    },
+                    {
+                        "display_type": "date",
+                        "name": "date_to",
+                        "value": "Tue, 06 Sep 2022 22:00:00 GMT",
+                        "trait_type": "Date To"
+                    }
+                ],
+                "setting": {
+                    "start_date_mint": "Tue, 06 Sep 2022 22:00:00 GMT",
+                    "max_total_supply": "2000",
+                    "end_date_mint": null
+                }
+            },
+            "last_token_uri_sync": "2022-09-07T21:02:37.314Z",
+            "last_metadata_sync": "2022-09-07T21:02:49.257Z"
+        }
+    ]
+    ad_search:
+      type: object
+      properties:
+        "total":
+          type: integer
+          format: int32
+          example: 3
+        "result":
+          type: array
+          items:
+            type: object
+            example: [
+        {
+            "seller_wallet": "address_signature",
+            "base_token_address": "0x9881481df34974c2cb17157ae3c3cd209831707f",
+            "identifier": "a2e34a18-7002-4e70-8aac-76211c4afb35",
+            "close_date": 0,
+            "blockchain_id": "97",
+            "quote_token_name": "BNB",
+            "base_token_id": "98573941562297697713819106013762018575545785116019630606780014183091713679564",
+            "update_date": "2022-10-13T13:33:31.242Z",
+            "quote_token_address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+            "base_token_quantity": 1,
+            "quote_token_quantity": 1,
+            "terms": "Test",
+            "quote_token_symbol": "BNB",
+            "blockchain_name": "bsctest",
+            "create_date": "2022-10-13T13:33:31.242Z",
+            "base_token_name": "Nft Test 1"
+        },
+        {
+            "base_token_address": "0x9881481df34974c2cb17157ae3c3cd209831707f",
+            "seller_wallet": "0xf8cc73d7f562aac495729dbe71f8fca0ee48ffc7",
+            "identifier": "9fb1d882-528b-419b-ba67-1c9167769af0",
+            "close_date": 0,
+            "blockchain_id": 97,
+            "quote_token_name": "BNB",
+            "base_token_id": "114768091031391630999878723008401814686629115382750493497755194550053553208154",
+            "update_date": "2022-10-27T20:38:32.710Z",
+            "quote_token_address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+            "quote_token_quantity": 1,
+            "base_token_quantity": 1,
+            "terms": "dsfdsgfsdfsdfsdfsd sdfsdfsdfsd",
+            "quote_token_symbol": "BNB",
+            "blockchain_name": "bsctest",
+            "create_date": "2022-10-27T20:38:32.710Z",
+            "base_token_name": "Parzival"
+        },
+        {
+            "base_token_address": "0x9881481df34974c2cb17157ae3c3cd209831707f",
+            "seller_wallet": "0x5b4233f2ad4a36dc7eb0e64abe7d092ef6326279",
+            "identifier": "4e8998b1-03d5-46d9-98e8-03a2459d584f",
+            "close_date": 0,
+            "blockchain_id": 97,
+            "quote_token_name": "BNB",
+            "base_token_id": "14220536809117101465184671544436581024856603599618147969562087750727012009726",
+            "update_date": "2022-10-27T16:35:36.048Z",
+            "quote_token_address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+            "quote_token_quantity": 1,
+            "base_token_quantity": 1,
+            "terms": "fvbxfsfsf",
+            "quote_token_symbol": "BNB",
+            "blockchain_name": "bsctest",
+            "create_date": "2022-10-27T16:35:36.048Z",
+            "base_token_name": "test_wrong_error"
+        }
+    ]
+    ad_identifier:
+      type: object
+      properties:
+        "total":
+          type: integer
+          format: int32
+          example: 7
+        "result":
+          type: array
+          items:
+            type: object
+            example: [
+        {
+            "token_address": "0xfa9b79769adc9bc9684d770586ed0a3a1074139d",
+            "token_id": "6",
+            "amount": "1",
+            "owner_of": "0xc1f4fd1196953f0a70b2f368129c8a45fc88ae32",
+            "token_hash": "b107087cdd8bb8d6c1bd399b5645245b",
+            "block_number_minted": "21706808",
+            "block_number": "21728048",
+            "contract_type": "ERC1155",
+            "name": "Euler Tools Guestbook",
+            "symbol": "EULERBOOK",
+            "token_uri": "https://nft.api.prod.euler.tools/nft/50d3ec51-c5bb-4e76-b4c7-3de09e26df4a/info.json",
+            "metadata": {
+                "name": "AWS Iberia Fintech Day 2022",
+                "description": "Evento de AWS en Madrid el día Miércoles 28 de Septiembre",
+                "image": "https://nft.assets.prod.euler.tools/nft/50d3ec51-c5bb-4e76-b4c7-3de09e26df4a/image.jpeg",
+                "attributes": [
+                    {
+                        "name": "location",
+                        "value": "Madrid",
+                        "trait_type": "Location"
+                    },
+                    {
+                        "name": "date_from",
+                        "display_type": "date",
+                        "value": "Sun, 27 Sep 2020 22:00:00 GMT",
+                        "trait_type": "Date From"
+                    },
+                    {
+                        "name": "date_to",
+                        "display_type": "date",
+                        "value": "Sun, 27 Sep 2020 22:00:00 GMT",
+                        "trait_type": "Date To"
+                    }
+                ],
+                "setting": {
+                    "start_date_mint": "Tue, 27 Sep 2022 20:56:00 GMT",
+                    "max_total_supply": "1000",
+                    "end_date_mint": "Thu, 27 Oct 2022 20:57:00 GMT"
+                }
+            },
+            "last_token_uri_sync": "2022-09-27T21:02:19.056Z",
+            "last_metadata_sync": "2022-09-27T21:02:22.858Z"
+        },
+        {
+            "token_address": "0xfa9b79769adc9bc9684d770586ed0a3a1074139d",
+            "token_id": "5",
+            "amount": "1",
+            "owner_of": "0xc1f4fd1196953f0a70b2f368129c8a45fc88ae32",
+            "token_hash": "a28d7e5a46a0eafbac8fbcb22b5f1ed2",
+            "block_number_minted": "21134297",
+            "block_number": "21176158",
+            "contract_type": "ERC1155",
+            "name": "Euler Tools Guestbook",
+            "symbol": "EULERBOOK",
+            "token_uri": "https://nft.api.prod.euler.tools/nft/c1bcadc7-3c5b-497a-82a2-a605ccda2a4d/info.json",
+            "metadata": {
+                "name": "Partnership with SuperReal",
+                "description": "Partnership with SuperReal to tokenize the metaverse",
+                "image": "https://nft.assets.prod.euler.tools/nft/c1bcadc7-3c5b-497a-82a2-a605ccda2a4d/image.png",
+                "attributes": [
+                    {
+                        "name": "location",
+                        "value": "https://euler.tools/",
+                        "trait_type": "Location"
+                    },
+                    {
+                        "display_type": "date",
+                        "name": "date_from",
+                        "value": "Tue, 06 Sep 2022 22:00:00 GMT",
+                        "trait_type": "Date From"
+                    },
+                    {
+                        "display_type": "date",
+                        "name": "date_to",
+                        "value": "Tue, 06 Sep 2022 22:00:00 GMT",
+                        "trait_type": "Date To"
+                    }
+                ],
+                "setting": {
+                    "start_date_mint": "Tue, 06 Sep 2022 22:00:00 GMT",
+                    "max_total_supply": "2000",
+                    "end_date_mint": null
+                }
+            },
+            "last_token_uri_sync": "2022-09-07T21:02:37.314Z",
+            "last_metadata_sync": "2022-09-07T21:02:49.257Z"
+        }
+    ]
+    create_nft:
+      type: object
+      properties:
+        "status":
+          type: integer
+          format: int32
+          example: 200
+        "description":
+          type: string
+          example: "Successful request"
+        "payload":
+          type: object
+          example: {
+        "identifier": "3f412f58-3e5c-43c3-9f0a-69f1964241a4"
+    }
+    
+         
+
+      
+      
+        
+    
+     
+      
+
+          
+
+    
+    
