@@ -1,0 +1,6 @@
+## NFT
+### An API that allows for the creation and retrieval of non-fungible tokens (NFTs) and information about NFT collections and marketplaces is a web service that enables developers to build applications that interact with the growing world of blockchain-based digital assets. 
+
+### This type of API typically provides a set of endpoints that clients can use to create, manage, and retrieve information about NFTs, as well as access data about existing collections and marketplaces. For example, a client may use the API to create a new NFT that represents a unique digital artwork or collectible, or to retrieve information about a specific NFT, such as its unique identifier, owner, or metadata. 
+
+### The API may also provide additional functionality, such as the ability to query the NFT marketplace for information about the latest sales and trends, or to access data about the most popular NFT collections and creators. Overall, an API that allows for the creation and retrieval of NFTs and related data provides developers with a powerful tool for building applications that interact with the world of blockchain-based digital assets.
