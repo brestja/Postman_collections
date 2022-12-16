@@ -1,0 +1,1 @@
+# Click [Here](https://www.veed.io/view/668287be-e248-405e-9b4d-e7bc45a499b4?panel=share) to see how integrate Slack for automatics tests
